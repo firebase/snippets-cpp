@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Directory used to contain EAP frameworks
+binary/
+Pods/
+GoogleService-Info.plist
+
+## User settings
+xcuserdata/
+
+## Pod-generated Xcode workspaces
+*.xcworkspace
+
+## Obj-C/Swift specific
+*.hmap
+

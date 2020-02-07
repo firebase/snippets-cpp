@@ -15,7 +15,7 @@
 //
 
 #import "ViewController.h"
-#include "snippets.hpp"
+#include "snippets.h"
 
 @interface ViewController ()
 

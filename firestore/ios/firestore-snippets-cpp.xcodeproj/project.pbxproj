@@ -3,15 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8D15A7BB23E4F6B400C8C0A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D15A7BA23E4F6B400C8C0A7 /* GoogleService-Info.plist */; };
-		8D15A7BE23E4F71700C8C0A7 /* snippets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8D15A7BC23E4F71700C8C0A7 /* snippets.cpp */; };
 		8D50CC3323E8B179008CBBE2 /* firebase_auth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D15A7B623E4F61C00C8C0A7 /* firebase_auth.framework */; };
 		8D50CC3423E8B179008CBBE2 /* firebase_firestore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D15A7B823E4F62000C8C0A7 /* firebase_firestore.framework */; };
 		8D50CC3523E8B179008CBBE2 /* firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D15A7BF23E4F80900C8C0A7 /* firebase.framework */; };
+		8D50CC5D23EDEF54008CBBE2 /* snippets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8D50CC5B23EDEF54008CBBE2 /* snippets.cpp */; };
 		8DF1362423E4F50C00386093 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1362323E4F50C00386093 /* AppDelegate.mm */; };
 		8DF1362723E4F50C00386093 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1362623E4F50C00386093 /* SceneDelegate.m */; };
 		8DF1362A23E4F50C00386093 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1362923E4F50C00386093 /* ViewController.mm */; };
@@ -25,9 +25,9 @@
 		8D15A7B623E4F61C00C8C0A7 /* firebase_auth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_auth.framework; path = binary/firebase_cpp_sdk/frameworks/ios/universal/firebase_auth.framework; sourceTree = "<group>"; };
 		8D15A7B823E4F62000C8C0A7 /* firebase_firestore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_firestore.framework; path = binary/firebase_cpp_sdk/frameworks/ios/universal/firebase_firestore.framework; sourceTree = "<group>"; };
 		8D15A7BA23E4F6B400C8C0A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8D15A7BC23E4F71700C8C0A7 /* snippets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = snippets.cpp; sourceTree = "<group>"; };
-		8D15A7BD23E4F71700C8C0A7 /* snippets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = snippets.h; sourceTree = "<group>"; };
 		8D15A7BF23E4F80900C8C0A7 /* firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase.framework; path = binary/firebase_cpp_sdk/frameworks/ios/universal/firebase.framework; sourceTree = "<group>"; };
+		8D50CC5B23EDEF54008CBBE2 /* snippets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = snippets.cpp; path = ../../android/FirestoreSnippetsCpp/app/src/main/cpp/snippets.cpp; sourceTree = "<group>"; };
+		8D50CC5C23EDEF54008CBBE2 /* snippets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = snippets.h; path = ../../android/FirestoreSnippetsCpp/app/src/main/cpp/snippets.h; sourceTree = "<group>"; };
 		8DF1361F23E4F50C00386093 /* firestore-snippets-cpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "firestore-snippets-cpp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF1362223E4F50C00386093 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8DF1362323E4F50C00386093 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -101,13 +101,13 @@
 				8DF1362623E4F50C00386093 /* SceneDelegate.m */,
 				8DF1362823E4F50C00386093 /* ViewController.h */,
 				8DF1362923E4F50C00386093 /* ViewController.mm */,
-				8D15A7BD23E4F71700C8C0A7 /* snippets.h */,
-				8D15A7BC23E4F71700C8C0A7 /* snippets.cpp */,
 				8DF1362B23E4F50C00386093 /* Main.storyboard */,
 				8DF1362E23E4F50D00386093 /* Assets.xcassets */,
 				8DF1363023E4F50D00386093 /* LaunchScreen.storyboard */,
 				8DF1363323E4F50D00386093 /* Info.plist */,
 				8DF1363423E4F50D00386093 /* main.m */,
+				8D50CC5B23EDEF54008CBBE2 /* snippets.cpp */,
+				8D50CC5C23EDEF54008CBBE2 /* snippets.h */,
 			);
 			path = "firestore-snippets-cpp";
 			sourceTree = "<group>";
@@ -187,7 +187,7 @@
 				8DF1362423E4F50C00386093 /* AppDelegate.mm in Sources */,
 				8DF1363523E4F50D00386093 /* main.m in Sources */,
 				8DF1362723E4F50C00386093 /* SceneDelegate.m in Sources */,
-				8D15A7BE23E4F71700C8C0A7 /* snippets.cpp in Sources */,
+				8D50CC5D23EDEF54008CBBE2 /* snippets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

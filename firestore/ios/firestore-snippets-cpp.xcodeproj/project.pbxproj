@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,7 +26,7 @@
 		8D15A7B823E4F62000C8C0A7 /* firebase_firestore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_firestore.framework; path = binary/firebase_cpp_sdk/frameworks/ios/universal/firebase_firestore.framework; sourceTree = "<group>"; };
 		8D15A7BA23E4F6B400C8C0A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D15A7BC23E4F71700C8C0A7 /* snippets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = snippets.cpp; sourceTree = "<group>"; };
-		8D15A7BD23E4F71700C8C0A7 /* snippets.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = snippets.hpp; sourceTree = "<group>"; };
+		8D15A7BD23E4F71700C8C0A7 /* snippets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = snippets.h; sourceTree = "<group>"; };
 		8D15A7BF23E4F80900C8C0A7 /* firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase.framework; path = binary/firebase_cpp_sdk/frameworks/ios/universal/firebase.framework; sourceTree = "<group>"; };
 		8DF1361F23E4F50C00386093 /* firestore-snippets-cpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "firestore-snippets-cpp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF1362223E4F50C00386093 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 				8DF1362623E4F50C00386093 /* SceneDelegate.m */,
 				8DF1362823E4F50C00386093 /* ViewController.h */,
 				8DF1362923E4F50C00386093 /* ViewController.mm */,
-				8D15A7BD23E4F71700C8C0A7 /* snippets.hpp */,
+				8D15A7BD23E4F71700C8C0A7 /* snippets.h */,
 				8D15A7BC23E4F71700C8C0A7 /* snippets.cpp */,
 				8DF1362B23E4F50C00386093 /* Main.storyboard */,
 				8DF1362E23E4F50D00386093 /* Assets.xcassets */,

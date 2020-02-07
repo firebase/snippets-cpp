@@ -14,15 +14,21 @@
 //  limitations under the License.
 //
 
-#ifndef snippets_hpp
-#define snippets_hpp
+#include "snippets_runner.h"
+#include "snippets.h"
+#include "firebase/app.h"
 
-#include <stdio.h>
+#include <jni.h>
 
-class SnippetsRunner {
-public:
-  SnippetsRunner();
-  void runAllSnippets();
-};
+extern "C" {
 
-#endif /* snippets_hpp */
+JNIEXPORT void JNICALL Java_com_firebase_firestoresnippetscpp_SnippetsRunner_runSnippets(JNIEnv *env, jobject /* this */) {
+  auto runner = SnippetsRunner();
+  runner.runAllSnippets();
+}
+
+JNIEXPORT void JNICALL Java_com_firebase_firestoresnippetscpp_MainActivity_initializeFirebase(JNIEnv *env, jobject object) {
+  firebase::App::Create(env, object);
+}
+
+}

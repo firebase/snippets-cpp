@@ -48,6 +48,7 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
   // you add data to the document. You do not need to explicitly create
   // collections or documents.
 
+  // [START add_ada_lovelace]
   // Add a new document with a generated ID
   Future<DocumentReference> user_ref =
       db->Collection("users").Add({{"first", FieldValue::FromString("Ada")},
@@ -62,12 +63,14 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
       std::cout << "Error adding document: " << future.error_message() << '\n';
     }
   });
+  // [END add_ada_lovelace]
 
   // Now add another document to the users collection. Notice that this document
   // includes a key-value pair (middle name) that does not appear in the first
   // document. Documents in a collection can contain different sets of
   // information.
 
+  // [START add_alan_turing]
   db->Collection("users")
       .Add({{"first", FieldValue::FromString("Alan")},
             {"middle", FieldValue::FromString("Mathison")},
@@ -82,6 +85,7 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
                     << '\n';
         }
       });
+  // [END add_alan_turing]
 }
 
 // https://firebase.google.com/docs/firestore/quickstart#read_data
@@ -96,7 +100,7 @@ void QuickstartReadData(firebase::firestore::Firestore* db) {
   // viewer in the Firebase console.
   //
   // You can also use the "Get" method to retrieve the entire collection.
-
+  // [START get_collection]
   Future<QuerySnapshot> users = db->Collection("users").Get();
   users.OnCompletion([](const Future<QuerySnapshot>& future) {
     if (future.error() == Error::Ok) {
@@ -108,6 +112,7 @@ void QuickstartReadData(firebase::firestore::Firestore* db) {
                 << '\n';
     }
   });
+  // [END get_collection]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/add-data#set_a_document
@@ -118,6 +123,8 @@ void AddDataSetDocument(firebase::firestore::Firestore* db) {
   using firebase::firestore::SetOptions;
 
   // To create or overwrite a single document, use the Set() method:
+  // [START set_document]
+  // Add a new document in collection 'cities'
   db->Collection("cities")
       .Document("LA")
       .Set({{"name", FieldValue::FromString("Los Angeles")},
@@ -131,13 +138,16 @@ void AddDataSetDocument(firebase::firestore::Firestore* db) {
                     << '\n';
         }
       });
+  // [END set_document]
 
   // If the document does not exist, it will be created. If the document does
   // exist, its contents will be overwritten with the newly provided data,
   // unless you specify that the data should be merged into the existing
   // document, as follows:
+  // [START create_if_missing]
   db->Collection("cities").Document("BJ").Set(
       {{"capital", FieldValue::FromBoolean(true)}}, SetOptions::Merge());
+  // [END create_if_missing]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/add-data#data_types
@@ -152,6 +162,7 @@ void AddDataDataTypes(firebase::firestore::Firestore* db) {
   // including strings, booleans, numbers, dates, null, and nested arrays and
   // objects. Cloud Firestore always stores numbers as doubles, regardless of
   // what type of number you use in your code.
+  // [START data_types]
   MapFieldValue doc_data{
       {"stringExample", FieldValue::FromString("Hello world!")},
       {"booleanExample", FieldValue::FromBoolean(true)},
@@ -177,6 +188,7 @@ void AddDataDataTypes(firebase::firestore::Firestore* db) {
                     << '\n';
         }
       });
+  // [END data_types]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
@@ -185,17 +197,24 @@ void AddDataAddDocument(firebase::firestore::Firestore* db) {
 
   // When you use Set() to create a document, you must specify an ID for the
   // document to create. For example:
+  // [START set_data]
   db->Collection("cities").Document("SF").Set({/*some data*/});
+  // [END set_data]
 
   // But sometimes there isn't a meaningful ID for the document, and it's more
   // convenient to let Cloud Firestore auto-generate an ID for you. You can do
   // this by calling Add():
+  // [START add_document]
   db->Collection("cities").Add({/*some data*/});
+  // [END add_document]
 
   // In some cases, it can be useful to create a document reference with an
   // auto-generated ID, then use the reference later. For this use case, you can
   // call Document():
+
+  // [START new_document]
   DocumentReference new_city_ref = db->Collection("cities").Document();
+  // [END new_document]
   // Behind the scenes, Add(...) and Document().Set(...) are completely
   // equivalent, so you can use whichever is more convenient.
 }
@@ -208,17 +227,21 @@ void AddDataUpdateDocument(firebase::firestore::Firestore* db) {
 
   // To update some fields of a document without overwriting the entire
   // document, use the Update() method:
+  // [START update_document]
   DocumentReference washington_ref = db->Collection("cities").Document("DC");
   // Set the "capital" field of the city "DC".
   washington_ref.Update({{"capital", FieldValue::FromBoolean(true)}});
+  // [END update_document]
 
   // You can set a field in your document to a server timestamp which tracks
   // when the server receives the update.
+  // [START server_timestamp]
   DocumentReference doc_ref = db->Collection("objects").Document("some-id");
   doc_ref.Update({{"timestamp", FieldValue::ServerTimestamp()}})
       .OnCompletion([](const Future<void>& future) {
         // ...
       });
+  // [END server_timestamp]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/add-data#update_fields_in_nested_objects
@@ -228,6 +251,7 @@ void AddDataUpdateNestedObjects(firebase::firestore::Firestore* db) {
 
   // If your document contains nested objects, you can use "dot notation" to
   // reference nested fields within the document when you call Update():
+  // [START update_document_nested]
   // Assume the document contains:
   // {
   //   name: "Frank",
@@ -240,6 +264,7 @@ void AddDataUpdateNestedObjects(firebase::firestore::Firestore* db) {
       {"age", FieldValue::FromInteger(13)},
       {"favorites.color", FieldValue::FromString("red")},
   });
+  // [END update_document_nested]
   // Dot notation allows you to update a single nested field without overwriting
   // other nested fields. If you update a nested field without dot notation, you
   // will overwrite the entire map field.
@@ -259,6 +284,7 @@ void AddDataBatchedWrites(firebase::firestore::Firestore* db) {
   // completes atomically and can write to multiple documents. The following
   // example shows how to build and commit a write batch:
 
+  // [START write_batch]
   // Get a new write batch
   WriteBatch batch = db->batch();
 
@@ -282,6 +308,7 @@ void AddDataBatchedWrites(firebase::firestore::Firestore* db) {
       std::cout << "Write batch failure: " << future.error_message() << '\n';
     }
   });
+  // [END write_batch]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/transactions#transactions
@@ -294,7 +321,7 @@ void AddDataTransactions(firebase::firestore::Firestore* db) {
   using firebase::firestore::Transaction;
 
   // The following example shows how to create and run a transaction:
-
+  // [START simple_transaction]
   DocumentReference sf_doc_ref = db->Collection("cities").Document("SF");
   db->RunTransaction([sf_doc_ref](Transaction* transaction,
                                   std::string* out_error_message) -> Error {
@@ -319,6 +346,7 @@ void AddDataTransactions(firebase::firestore::Firestore* db) {
       std::cout << "Transaction failure: " << future.error_message() << '\n';
     }
   });
+  // [START simple_transaction]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/delete-data#delete_documents
@@ -327,6 +355,7 @@ void AddDataDeleteDocuments(firebase::firestore::Firestore* db) {
   using firebase::firestore::Error;
 
   // To delete a document, use the Delete() method:
+  // [START delete_document]
   db->Collection("cities").Document("DC").Delete().OnCompletion(
       [](const Future<void>& future) {
         if (future.error() == Error::Ok) {
@@ -336,6 +365,7 @@ void AddDataDeleteDocuments(firebase::firestore::Firestore* db) {
                     << '\n';
         }
       });
+  // [END delete_document]
   // WARNING: Deleting a document does not delete its subcollections!
 }
 
@@ -347,9 +377,11 @@ void AddDataDeleteFields(firebase::firestore::Firestore* db) {
 
   // To delete specific fields from a document, use the FieldValue.delete()
   // method when you update a document:
+  // [START delete_field]
   DocumentReference doc_ref = db->Collection("cities").Document("BJ");
   doc_ref.Update({{"capital", FieldValue::Delete()}})
       .OnCompletion([](const Future<void>& future) { /*...*/ });
+  // [END delete_field]
 
   // https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
   // To delete an entire collection or subcollection in Cloud Firestore,
@@ -366,6 +398,7 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
   // To get started, write some data about cities so we can look at different
   // ways to read it back:
 
+  // [START example_data]
   CollectionReference cities = db->Collection("cities");
 
   cities.Document("SF").Set({
@@ -417,6 +450,7 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
       {"regions", FieldValue::FromArray({FieldValue::FromString("jingjinji"),
                                          FieldValue::FromString("hebei")})},
   });
+  // [END example_data]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/get-data#get_a_document
@@ -429,6 +463,7 @@ void ReadDataGetDocument(firebase::firestore::Firestore* db) {
 
   // The following example shows how to retrieve the contents of a single
   // document using Get():
+  // [START get_document]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.Get().OnCompletion([](const Future<DocumentSnapshot>& future) {
     if (future.error() == Error::Ok) {
@@ -442,6 +477,7 @@ void ReadDataGetDocument(firebase::firestore::Firestore* db) {
       std::cout << "Get failed with: " << future.error_message() << '\n';
     }
   });
+  // [END get_document]
 }
 
 void ReadDataSourceOptions(firebase::firestore::Firestore* db) {
@@ -463,6 +499,7 @@ void ReadDataSourceOptions(firebase::firestore::Firestore* db) {
   // You can specify the source option in a Get() call to change the default
   // behavior. You can fetch from only the database and ignore the offline
   // cache, or you can fetch from only the offline cache. For example:
+  // [START get_document_options]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   Source source = Source::kCache;
   doc_ref.Get(source).OnCompletion([](const Future<DocumentSnapshot>& future) {
@@ -476,6 +513,7 @@ void ReadDataSourceOptions(firebase::firestore::Firestore* db) {
       std::cout << "Cached get failed: " << future.error_message() << '\n';
     }
   });
+  // [END get_document_options]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
@@ -491,6 +529,7 @@ void ReadDataGetMultipleDocumentsFromCollection(
   // documents in a collection. For example, you can use Where() to query for
   // all of the documents that meet a certain condition, then use Get() to
   // retrieve the results:
+  // [START get_multiple]
   db->Collection("cities")
       .WhereEqualTo("capital", FieldValue::FromBoolean(true))
       .Get()
@@ -505,6 +544,7 @@ void ReadDataGetMultipleDocumentsFromCollection(
                     << '\n';
         }
       });
+  // [END get_multiple]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/get-data#get_all_documents_in_a_collection
@@ -516,6 +556,7 @@ void ReadDataGetAllDocumentsInCollection(firebase::firestore::Firestore* db) {
 
   // In addition, you can retrieve all documents in a collection by omitting the
   // Where() filter entirely:
+  // [START get_multiple_all]
   db->Collection("cities").Get().OnCompletion(
       [](const Future<QuerySnapshot>& future) {
         if (future.error() == Error::Ok) {
@@ -528,6 +569,7 @@ void ReadDataGetAllDocumentsInCollection(firebase::firestore::Firestore* db) {
                     << '\n';
         }
       });
+  // [END get_multiple_all]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/listen
@@ -540,6 +582,7 @@ void ReadDataListen(firebase::firestore::Firestore* db) {
   // initial call using the callback you provide creates a document snapshot
   // immediately with the current contents of the single document. Then, each
   // time the contents change, another call updates the document snapshot.
+  // [START listen_document]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener(
       [](const DocumentSnapshot& snapshot, Error error) {
@@ -553,6 +596,7 @@ void ReadDataListen(firebase::firestore::Firestore* db) {
           std::cout << "Listen failed: " << error << '\n';
         }
       });
+  // [END listen_document]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/listen#events-local-changes
@@ -572,6 +616,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
   // to the backend yet. You can use this property to determine the source of
   // events received by your snapshot listener:
 
+  // [START listen_document]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener([](const DocumentSnapshot& snapshot,
                                  Error error) {
@@ -588,6 +633,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
       std::cout << "Listen failed: " << error << '\n';
     }
   });
+  // [END listen_document]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/listen#events-metadata-changes
@@ -613,10 +659,12 @@ void ReadDataEventsForMetadataChanges(firebase::firestore::Firestore* db) {
   // writes" flag is now false.
   // If you want to receive snapshot events when the document or query metadata
   // changes, pass a listen options object when attaching your listener:
+  // [START listen_with_metadata]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener(
       MetadataChanges::kInclude,
       [](const DocumentSnapshot& snapshot, Error error) { /* ... */ });
+  // [END listen_with_metadata]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection
@@ -630,6 +678,7 @@ void ReadDataListenToMultipleDocumentsInCollection(
   // As with documents, you can use AddSnapshotListener() instead of Get() to
   // listen to the results of a query. This creates a query snapshot. For
   // example, to listen to the documents with state CA:
+  // [START listen_multiple]
   db->Collection("cities")
       .WhereEqualTo("state", FieldValue::FromString("CA"))
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
@@ -644,6 +693,7 @@ void ReadDataListenToMultipleDocumentsInCollection(
           std::cout << "Listen failed: " << error << '\n';
         }
       });
+  // [END listen_multiple]
 
   // The snapshot handler will receive a new query snapshot every time the query
   // results change (that is, when a document is added, removed, or modified).
@@ -660,6 +710,7 @@ void ReadDataViewChangesBetweenSnapshots(firebase::firestore::Firestore* db) {
   // snapshots, instead of simply using the entire query snapshot. For example,
   // you may want to maintain a cache as individual documents are added,
   // removed, and modified.
+  // [START listen_diffs]
   db->Collection("cities")
       .WhereEqualTo("state", FieldValue::FromString("CA"))
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
@@ -684,6 +735,7 @@ void ReadDataViewChangesBetweenSnapshots(firebase::firestore::Firestore* db) {
           std::cout << "Listen failed: " << error << '\n';
         }
       });
+  // [END listen_diffs]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/listen#detach_a_listener
@@ -696,11 +748,14 @@ void ReadDataDetachListener(firebase::firestore::Firestore* db) {
   // When you are no longer interested in listening to your data, you must
   // detach your listener so that your event callbacks stop getting called. This
   // allows the client to stop using bandwidth to receive updates. For example:
+  // [START detach_listener]
+  // Add a listener
   Query query = db->Collection("cities");
   ListenerRegistration registration = query.AddSnapshotListener(
       [](const QuerySnapshot& snapshot, Error error) { /* ... */ });
   // Stop listening to changes
   registration.Remove();
+  // [END detach_listener]
 
   // A listen may occasionally fail — for example, due to security permissions,
   // or if you tried to listen on an invalid query. After an error, the listener
@@ -718,6 +773,7 @@ void ReadDataSimpleQueries(firebase::firestore::Firestore* db) {
   // documents you want to retrieve from a collection.
 
   // The following query returns all cities with state CA:
+  // [START simple_queries]
   CollectionReference cities_ref = db->Collection("cities");
   // Create a query against the collection.
   Query query_ca =
@@ -726,6 +782,7 @@ void ReadDataSimpleQueries(firebase::firestore::Firestore* db) {
   // The following query returns all the capital cities:
   Query capital_cities = db->Collection("cities").WhereEqualTo(
       "capital", FieldValue::FromBoolean(true));
+  // [END simple_queries]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#execute_a_query
@@ -738,6 +795,7 @@ void ReadDataExecuteQuery(firebase::firestore::Firestore* db) {
 
   // After creating a query object, use the Get() function to retrieve the
   // results:
+  // This snippet is identical to get_multiple above.
   db->Collection("cities")
       .WhereEqualTo("capital", FieldValue::FromBoolean(true))
       .Get()
@@ -779,22 +837,36 @@ void ReadDataCompoundQueries(firebase::firestore::Firestore* db) {
   // (logical AND). However, to combine the equality operator (==) with a range
   // (<, <=, >, >=) or array-contains clause, make sure to create a composite
   // index.
+  // [START chain_filters]
   cities_ref.WhereEqualTo("state", FieldValue::FromString("CO"))
       .WhereEqualTo("name", FieldValue::FromString("Denver"));
   cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"))
       .WhereLessThan("population", FieldValue::FromInteger(1000000));
+  // [END chain_filters]
 
   // You can only perform range comparisons (<, <=, >, >=) on a single field,
   // and you can include at most one array-contains clause in a compound query:
+  // [START valid_range_filters]
   cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::FromString("CA"))
       .WhereLessThanOrEqualTo("state", FieldValue::FromString("IN"));
   cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"))
       .WhereGreaterThan("population", FieldValue::FromInteger(1000000));
+  // [END valid_range_filters]
+}
 
+// This method is left unexecuted to avoid crashing the snippets runner.
+// https://firebase.google.com/docs/firestore/query-data/queries#compound_queries
+void ReadDataInvalidCompoundQuery(firebase::firestore::Firestore* db) {
+  using firebase::firestore::CollectionReference;
+  using firebase::firestore::FieldValue;
+
+  CollectionReference cities_ref = db->Collection("cities");
+
+  // [START invalid_range_filters]
   // BAD EXAMPLE -- will crash the program:
-  // cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::FromString("CA"))
-  //     .WhereGreaterThan("population",
-  //                       FieldValue::FromInteger(100000));
+  cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::FromString("CA"))
+      .WhereGreaterThan("population", FieldValue::FromInteger(100000));
+  // [END invalid_range_filters]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/order-limit-data#order_and_limit_data
@@ -815,28 +887,48 @@ void ReadDataOrderAndLimitData(firebase::firestore::Firestore* db) {
   // field.
   //
   // For example, you could query for the first 3 cities alphabetically with:
+  // [START order_and_limit]
   cities_ref.OrderBy("name").Limit(3);
+  // [END order_and_limit]
 
   // You could also sort in descending order to get the last 3 cities:
+  // [START order_and_limit_desc]
   cities_ref.OrderBy("name", Query::Direction::kDescending).Limit(3);
+  // [END order_and_limit_desc]
 
   // You can also order by multiple fields. For example, if you wanted to order
   // by state, and within each state order by population in descending order:
+  // [START order_multiple]
   cities_ref.OrderBy("state").OrderBy("name", Query::Direction::kDescending);
+  // [END order_multiple]
 
   // You can combine Where() filters with OrderBy() and Limit(). In the
   // following example, the queries define a population threshold, sort by
   // population in ascending order, and return only the first few results that
   // exceed the threshold:
+  // [START filter_and_order]
   cities_ref.WhereGreaterThan("population", FieldValue::FromInteger(100000))
       .OrderBy("population")
       .Limit(2);
+  // [END filter_and_order]
+}
+
+// This method is left unexecuted to avoid crashing the snippets runner.
+// https://firebase.google.com/docs/firestore/query-data/order-limit-data#order_and_limit_data
+void ReadDataInvalidOrderAndLimit(firebase::firestore::Firestore* db) {
+  using firebase::firestore::CollectionReference;
+  using firebase::firestore::FieldValue;
+  using firebase::firestore::Query;
+
+  CollectionReference cities_ref = db->Collection("cities");
 
   // However, if you have a filter with a range comparison (<, <=, >, >=), your
   // first ordering must be on the same field.
+  // [START invalid_filter_and_order]
   // BAD EXAMPLE -- will crash the program:
-  // cities_ref.WhereGreaterThan("population", FieldValue::FromInteger(100000))
-  //     .OrderBy("country");
+  cities_ref.WhereGreaterThan("population", FieldValue::FromInteger(100000))
+      .OrderBy("country");
+  // [END invalid_filter_and_order]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/query-cursors#add_a_simple_cursor_to_a_query
@@ -851,17 +943,21 @@ void ReadDataAddSimpleCursorToQuery(firebase::firestore::Firestore* db) {
   // returns the entire alphabet. If you use
   // StartAftert(FieldValue::FromString("A")) instead, it returns B-Z.
 
+  // [START cursor_greater_than]
   // Get all cities with a population >= 1,000,000, ordered by population,
   db->Collection("cities")
       .OrderBy("population")
       .StartAt({FieldValue::FromInteger(1000000)});
+  // [END cursor_greater_than]
 
   // Similarly, use the EndAt() or EndBefore() methods to define an end point
   // for your query results.
+  // [START cursor_less_than]
   // Get all cities with a population <= 1,000,000, ordered by population,
   db->Collection("cities")
       .OrderBy("population")
       .EndAt({FieldValue::FromInteger(1000000)});
+  // [END cursor_less_than]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/query-cursors#use_a_document_snapshot_to_define_the_query_cursor
@@ -880,6 +976,7 @@ void ReadDataDocumentSnapshotInCursor(firebase::firestore::Firestore* db) {
   // point for your population query cursor. Your query will return all the
   // cities with a population larger than or equal to San Francisco's, as
   // defined in the document snapshot.
+  // [START snapshot_cursor]
   db->Collection("cities").Document("SF").Get().OnCompletion(
       [db](const Future<DocumentSnapshot>& future) {
         if (future.error() == Error::Ok) {
@@ -890,6 +987,7 @@ void ReadDataDocumentSnapshotInCursor(firebase::firestore::Firestore* db) {
           // ...
         }
       });
+  // [END snapshot_cursor]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/query-cursors#paginate_a_query
@@ -904,6 +1002,7 @@ void ReadDataPaginateQuery(firebase::firestore::Firestore* db) {
   // example, use the last document in a batch as the start of a cursor for the
   // next batch.
 
+  // [START paginate]
   // Construct query for first 25 cities, ordered by population
   Query first = db->Collection("cities").OrderBy("population").Limit(25);
 
@@ -928,6 +1027,7 @@ void ReadDataPaginateQuery(firebase::firestore::Firestore* db) {
     // Use the query for pagination
     // ...
   });
+  // [END paginate]
 }
 
 }  // namespace snippets

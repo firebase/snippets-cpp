@@ -36,6 +36,32 @@
 
 namespace snippets {
 
+// https://firebase.google.com/docs/firestore/data-model#references
+void DataModelReferenceDeclarations(firebase::firestore::Firestore* db) {
+  using firebase::firestore::DocumentReference;
+  using firebase::firestore::CollectionReference;
+
+  // [START doc_reference]
+  auto alovelaceDocumentRef = db->Collection("users").Document("alovelace");
+  // [END doc_reference]
+
+  // [START collection_reference]
+  auto usersCollectionRef = db->Collection("users");
+  // [END collection_reference]
+
+  // https://firebase.google.com/docs/firestore/data-model#hierarchical-data
+  // [START subcollection_reference]
+  auto messageRef = db->Collection("rooms")
+      .Document("roomA")
+      .Collection("messages")
+      .Document("message1");
+  // [END subcollection_reference]
+
+  // [START path_reference]
+  auto alovelaceDocumentReference = db->Document("users/alovelace");
+  // [END path_reference]
+}
+
 // https://firebase.google.com/docs/firestore/quickstart#add_data
 void QuickstartAddData(firebase::firestore::Firestore* db) {
   using firebase::Future;
@@ -1033,6 +1059,8 @@ void ReadDataPaginateQuery(firebase::firestore::Firestore* db) {
 }  // namespace snippets
 
 void RunAllSnippets(firebase::firestore::Firestore* db) {
+  snippets::DataModelReferenceDeclarations(db);
+
   snippets::QuickstartAddData(db);
   snippets::QuickstartReadData(db);
 

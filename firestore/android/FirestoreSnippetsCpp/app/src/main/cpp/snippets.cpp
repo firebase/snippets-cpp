@@ -42,23 +42,24 @@ void DataModelReferenceDeclarations(firebase::firestore::Firestore* db) {
   using firebase::firestore::CollectionReference;
 
   // [START doc_reference]
-  auto alovelaceDocumentRef = db->Collection("users").Document("alovelace");
+  DocumentReference alovelace_document_reference =
+      db->Collection("users").Document("alovelace");
   // [END doc_reference]
 
   // [START collection_reference]
-  auto usersCollectionRef = db->Collection("users");
+  CollectionReference users_collection_reference = db->Collection("users");
   // [END collection_reference]
 
   // https://firebase.google.com/docs/firestore/data-model#hierarchical-data
   // [START subcollection_reference]
-  auto messageRef = db->Collection("rooms")
+  DocumentReference message_reference = db->Collection("rooms")
       .Document("roomA")
       .Collection("messages")
       .Document("message1");
   // [END subcollection_reference]
 
   // [START path_reference]
-  auto alovelaceDocumentReference = db->Document("users/alovelace");
+  DocumentReference alovelace_document = db->Document("users/alovelace");
   // [END path_reference]
 }
 

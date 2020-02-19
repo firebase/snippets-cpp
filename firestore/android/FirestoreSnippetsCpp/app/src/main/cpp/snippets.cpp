@@ -373,7 +373,7 @@ void AddDataTransactions(firebase::firestore::Firestore* db) {
       std::cout << "Transaction failure: " << future.error_message() << '\n';
     }
   });
-  // [START simple_transaction]
+  // [END simple_transaction]
 }
 
 // https://firebase.google.com/docs/firestore/manage-data/delete-data#delete_documents
@@ -643,7 +643,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
   // to the backend yet. You can use this property to determine the source of
   // events received by your snapshot listener:
 
-  // [START listen_document]
+  // [START listen_document_local]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener([](const DocumentSnapshot& snapshot,
                                  Error error) {
@@ -660,7 +660,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
       std::cout << "Listen failed: " << error << '\n';
     }
   });
-  // [END listen_document]
+  // [END listen_document_local]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/listen#events-metadata-changes
@@ -805,11 +805,13 @@ void ReadDataSimpleQueries(firebase::firestore::Firestore* db) {
   // Create a query against the collection.
   Query query_ca =
       cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"));
+  // [END simple_queries]
 
   // The following query returns all the capital cities:
+  // [START query_capitals]
   Query capital_cities = db->Collection("cities").WhereEqualTo(
       "capital", FieldValue::FromBoolean(true));
-  // [END simple_queries]
+  // [END query_capitals]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#execute_a_query
@@ -847,10 +849,12 @@ void ReadDataQueryOperators(firebase::firestore::Firestore* db) {
   CollectionReference cities_ref = db->Collection("cities");
 
   // Some example filters:
+  // [START example_filters]
   cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"));
   cities_ref.WhereLessThan("population", FieldValue::FromInteger(100000));
   cities_ref.WhereGreaterThanOrEqualTo("name",
                                        FieldValue::FromString("San Francisco"));
+  // [END example_filters]
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#compound_queries

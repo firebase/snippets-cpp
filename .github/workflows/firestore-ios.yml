@@ -1,0 +1,33 @@
+name: Firestore iOS snippets build
+
+on:
+  pull_request:
+    paths:
+    - 'firestore/ios**'
+    # Though they live in the android directory, these files are shared.
+    - 'firestore/android/FirestoreSnippetsCpp/app/src/main/cpp/snippets.cpp'
+    - 'firestore/android/FirestoreSnippetsCpp/app/src/main/cpp/snippets.h'
+    - '.github/workflows/firestore-ios.yml'
+
+jobs:
+  firestore-ios-build:
+    name: Build snippets
+    runs-on: macOS-latest
+    strategy:
+        matrix:
+          destination: ['platform=iOS Simulator,OS=13.3,name=iPhone 11']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Download C++ SDK
+        run: curl -o firestore/ios/binary/firebase-cpp-sdk.zip https://dl.google.com/firebase/sdk/cpp/firebase_cpp_sdk_6.12.0.zip --create-dirs
+      - name: Extract SDK
+        run: unzip firestore/ios/binary/firebase-cpp-sdk.zip -d firestore/ios/binary
+      - name: Build
+        run: |
+          cp .github/GoogleService-Info-CI.plist firestore/ios/GoogleService-Info.plist
+          cd firestore/ios
+          pod install --repo-update
+          xcodebuild -workspace firestore-snippets-cpp.xcworkspace clean build -scheme firestore-snippets-cpp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        env: 
+          destination: ${{ matrix.destination }}

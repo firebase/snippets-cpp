@@ -26,5 +26,5 @@ jobs:
       - name: Build with Gradle
         run: |
           cd firestore/android/FirestoreSnippetsCpp
-          ./gradlew clean ktlint build
+          ./gradlew clean build
 

@@ -4,6 +4,6 @@ target 'firestore-snippets-cpp' do
   use_frameworks!
 
   pod 'Firebase/Auth'
-  pod 'Firebase/Firestore', '6.10.0'
+  pod 'Firebase/Firestore', '6.17.0'
 
 end

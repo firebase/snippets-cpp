@@ -355,7 +355,7 @@ void AddDataTransactions(firebase::firestore::Firestore* db) {
       Error error = Error::kErrorOk;
 
       DocumentSnapshot snapshot =
-          transaction.Get(sf_doc_ref, &error, out_error_message);
+          transaction.Get(sf_doc_ref, &error, &out_error_message);
 
       // Note: this could be done without a transaction by updating the
       // population using FieldValue::Increment().

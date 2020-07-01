@@ -78,12 +78,12 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
   // [START add_ada_lovelace]
   // Add a new document with a generated ID
   Future<DocumentReference> user_ref =
-      db->Collection("users").Add({{"first", FieldValue::FromString("Ada")},
-                                   {"last", FieldValue::FromString("Lovelace")},
-                                   {"born", FieldValue::FromInteger(1815)}});
+      db->Collection("users").Add({{"first", FieldValue::String("Ada")},
+                                   {"last", FieldValue::String("Lovelace")},
+                                   {"born", FieldValue::Integer(1815)}});
 
   user_ref.OnCompletion([](const Future<DocumentReference>& future) {
-    if (future.error() == Error::Ok) {
+    if (future.error() == Error::kErrorOk) {
       std::cout << "DocumentSnapshot added with ID: " << future.result()->id()
                 << '\n';
     } else {
@@ -99,12 +99,12 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
 
   // [START add_alan_turing]
   db->Collection("users")
-      .Add({{"first", FieldValue::FromString("Alan")},
-            {"middle", FieldValue::FromString("Mathison")},
-            {"last", FieldValue::FromString("Turing")},
-            {"born", FieldValue::FromInteger(1912)}})
+      .Add({{"first", FieldValue::String("Alan")},
+            {"middle", FieldValue::String("Mathison")},
+            {"last", FieldValue::String("Turing")},
+            {"born", FieldValue::Integer(1912)}})
       .OnCompletion([](const Future<DocumentReference>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           std::cout << "DocumentSnapshot added with ID: "
                     << future.result()->id() << '\n';
         } else {
@@ -130,7 +130,7 @@ void QuickstartReadData(firebase::firestore::Firestore* db) {
   // [START get_collection]
   Future<QuerySnapshot> users = db->Collection("users").Get();
   users.OnCompletion([](const Future<QuerySnapshot>& future) {
-    if (future.error() == Error::Ok) {
+    if (future.error() == Error::kErrorOk) {
       for (const DocumentSnapshot& document : future.result()->documents()) {
         std::cout << document << '\n';
       }
@@ -154,11 +154,11 @@ void AddDataSetDocument(firebase::firestore::Firestore* db) {
   // Add a new document in collection 'cities'
   db->Collection("cities")
       .Document("LA")
-      .Set({{"name", FieldValue::FromString("Los Angeles")},
-            {"state", FieldValue::FromString("CA")},
-            {"country", FieldValue::FromString("USA")}})
+      .Set({{"name", FieldValue::String("Los Angeles")},
+            {"state", FieldValue::String("CA")},
+            {"country", FieldValue::String("USA")}})
       .OnCompletion([](const Future<void>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           std::cout << "DocumentSnapshot successfully written!\n";
         } else {
           std::cout << "Error writing document: " << future.error_message()
@@ -173,7 +173,7 @@ void AddDataSetDocument(firebase::firestore::Firestore* db) {
   // document, as follows:
   // [START create_if_missing]
   db->Collection("cities").Document("BJ").Set(
-      {{"capital", FieldValue::FromBoolean(true)}}, SetOptions::Merge());
+      {{"capital", FieldValue::Boolean(true)}}, SetOptions::Merge());
   // [END create_if_missing]
 }
 
@@ -191,24 +191,24 @@ void AddDataDataTypes(firebase::firestore::Firestore* db) {
   // what type of number you use in your code.
   // [START data_types]
   MapFieldValue doc_data{
-      {"stringExample", FieldValue::FromString("Hello world!")},
-      {"booleanExample", FieldValue::FromBoolean(true)},
-      {"numberExample", FieldValue::FromDouble(3.14159265)},
-      {"dateExample", FieldValue::FromTimestamp(Timestamp::Now())},
-      {"arrayExample", FieldValue::FromArray({FieldValue::FromInteger(1),
-                                              FieldValue::FromInteger(2),
-                                              FieldValue::FromInteger(3)})},
+      {"stringExample", FieldValue::String("Hello world!")},
+      {"booleanExample", FieldValue::Boolean(true)},
+      {"numberExample", FieldValue::Double(3.14159265)},
+      {"dateExample", FieldValue::Timestamp(Timestamp::Now())},
+      {"arrayExample", FieldValue::Array({FieldValue::Integer(1),
+                                          FieldValue::Integer(2),
+                                          FieldValue::Integer(3)})},
       {"nullExample", FieldValue::Null()},
       {"objectExample",
-       FieldValue::FromMap(
-           {{"a", FieldValue::FromInteger(5)},
-            {"b", FieldValue::FromMap(
-                      {{"nested", FieldValue::FromString("foo")}})}})},
+       FieldValue::Map(
+           {{"a", FieldValue::Integer(5)},
+            {"b", FieldValue::Map(
+                      {{"nested", FieldValue::String("foo")}})}})},
   };
 
   db->Collection("data").Document("one").Set(doc_data).OnCompletion(
       [](const Future<void>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           std::cout << "DocumentSnapshot successfully written!\n";
         } else {
           std::cout << "Error writing document: " << future.error_message()
@@ -257,7 +257,7 @@ void AddDataUpdateDocument(firebase::firestore::Firestore* db) {
   // [START update_document]
   DocumentReference washington_ref = db->Collection("cities").Document("DC");
   // Set the "capital" field of the city "DC".
-  washington_ref.Update({{"capital", FieldValue::FromBoolean(true)}});
+  washington_ref.Update({{"capital", FieldValue::Boolean(true)}});
   // [END update_document]
 
   // You can set a field in your document to a server timestamp which tracks
@@ -288,8 +288,8 @@ void AddDataUpdateNestedObjects(firebase::firestore::Firestore* db) {
   //
   // To update age and favorite color:
   db->Collection("users").Document("frank").Update({
-      {"age", FieldValue::FromInteger(13)},
-      {"favorites.color", FieldValue::FromString("red")},
+      {"age", FieldValue::Integer(13)},
+      {"favorites.color", FieldValue::String("red")},
   });
   // [END update_document_nested]
   // Dot notation allows you to update a single nested field without overwriting
@@ -321,7 +321,7 @@ void AddDataBatchedWrites(firebase::firestore::Firestore* db) {
 
   // Update the population of 'SF'
   DocumentReference sf_ref = db->Collection("cities").Document("SF");
-  batch.Update(sf_ref, {{"population", FieldValue::FromInteger(1000000)}});
+  batch.Update(sf_ref, {{"population", FieldValue::Integer(1000000)}});
 
   // Delete the city 'LA'
   DocumentReference la_ref = db->Collection("cities").Document("LA");
@@ -329,7 +329,7 @@ void AddDataBatchedWrites(firebase::firestore::Firestore* db) {
 
   // Commit the batch
   batch.Commit().OnCompletion([](const Future<void>& future) {
-    if (future.error() == Error::Ok) {
+    if (future.error() == Error::kErrorOk) {
       std::cout << "Write batch success!\n";
     } else {
       std::cout << "Write batch failure: " << future.error_message() << '\n';
@@ -350,24 +350,24 @@ void AddDataTransactions(firebase::firestore::Firestore* db) {
   // The following example shows how to create and run a transaction:
   // [START simple_transaction]
   DocumentReference sf_doc_ref = db->Collection("cities").Document("SF");
-  db->RunTransaction([sf_doc_ref](Transaction* transaction,
-                                  std::string* out_error_message) -> Error {
-      Error error = Error::Ok;
+  db->RunTransaction([sf_doc_ref](Transaction& transaction,
+                                  std::string& out_error_message) -> Error {
+      Error error = Error::kErrorOk;
 
       DocumentSnapshot snapshot =
-          transaction->Get(sf_doc_ref, &error, out_error_message);
+          transaction.Get(sf_doc_ref, &error, &out_error_message);
 
       // Note: this could be done without a transaction by updating the
       // population using FieldValue::Increment().
       std::int64_t new_population =
           snapshot.Get("population").integer_value() + 1;
-      transaction->Update(
+      transaction.Update(
           sf_doc_ref,
-          {{"population", FieldValue::FromInteger(new_population)}});
+          {{"population", FieldValue::Integer(new_population)}});
 
-      return Error::Ok;
+      return Error::kErrorOk;
     }).OnCompletion([](const Future<void>& future) {
-    if (future.error() == Error::Ok) {
+    if (future.error() == Error::kErrorOk) {
       std::cout << "Transaction success!\n";
     } else {
       std::cout << "Transaction failure: " << future.error_message() << '\n';
@@ -385,7 +385,7 @@ void AddDataDeleteDocuments(firebase::firestore::Firestore* db) {
   // [START delete_document]
   db->Collection("cities").Document("DC").Delete().OnCompletion(
       [](const Future<void>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           std::cout << "DocumentSnapshot successfully deleted!\n";
         } else {
           std::cout << "Error deleting document: " << future.error_message()
@@ -429,53 +429,53 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
   CollectionReference cities = db->Collection("cities");
 
   cities.Document("SF").Set({
-      {"name", FieldValue::FromString("San Francisco")},
-      {"state", FieldValue::FromString("CA")},
-      {"country", FieldValue::FromString("USA")},
-      {"capital", FieldValue::FromBoolean(false)},
-      {"population", FieldValue::FromInteger(860000)},
-      {"regions", FieldValue::FromArray({FieldValue::FromString("west_coast"),
-                                         FieldValue::FromString("norcal")})},
+      {"name", FieldValue::String("San Francisco")},
+      {"state", FieldValue::String("CA")},
+      {"country", FieldValue::String("USA")},
+      {"capital", FieldValue::Boolean(false)},
+      {"population", FieldValue::Integer(860000)},
+      {"regions", FieldValue::Array({FieldValue::String("west_coast"),
+                                     FieldValue::String("norcal")})},
   });
 
   cities.Document("LA").Set({
-      {"name", FieldValue::FromString("Los Angeles")},
-      {"state", FieldValue::FromString("CA")},
-      {"country", FieldValue::FromString("USA")},
-      {"capital", FieldValue::FromBoolean(false)},
-      {"population", FieldValue::FromInteger(3900000)},
-      {"regions", FieldValue::FromArray({FieldValue::FromString("west_coast"),
-                                         FieldValue::FromString("socal")})},
+      {"name", FieldValue::String("Los Angeles")},
+      {"state", FieldValue::String("CA")},
+      {"country", FieldValue::String("USA")},
+      {"capital", FieldValue::Boolean(false)},
+      {"population", FieldValue::Integer(3900000)},
+      {"regions", FieldValue::Array({FieldValue::String("west_coast"),
+                                     FieldValue::String("socal")})},
   });
 
   cities.Document("DC").Set({
-      {"name", FieldValue::FromString("Washington D.C.")},
+      {"name", FieldValue::String("Washington D.C.")},
       {"state", FieldValue::Null()},
-      {"country", FieldValue::FromString("USA")},
-      {"capital", FieldValue::FromBoolean(true)},
-      {"population", FieldValue::FromInteger(680000)},
+      {"country", FieldValue::String("USA")},
+      {"capital", FieldValue::Boolean(true)},
+      {"population", FieldValue::Integer(680000)},
       {"regions",
-       FieldValue::FromArray({FieldValue::FromString("east_coast")})},
+       FieldValue::Array({FieldValue::String("east_coast")})},
   });
 
   cities.Document("TOK").Set({
-      {"name", FieldValue::FromString("Tokyo")},
+      {"name", FieldValue::String("Tokyo")},
       {"state", FieldValue::Null()},
-      {"country", FieldValue::FromString("Japan")},
-      {"capital", FieldValue::FromBoolean(true)},
-      {"population", FieldValue::FromInteger(9000000)},
-      {"regions", FieldValue::FromArray({FieldValue::FromString("kanto"),
-                                         FieldValue::FromString("honshu")})},
+      {"country", FieldValue::String("Japan")},
+      {"capital", FieldValue::Boolean(true)},
+      {"population", FieldValue::Integer(9000000)},
+      {"regions", FieldValue::Array({FieldValue::String("kanto"),
+                                     FieldValue::String("honshu")})},
   });
 
   cities.Document("BJ").Set({
-      {"name", FieldValue::FromString("Beijing")},
+      {"name", FieldValue::String("Beijing")},
       {"state", FieldValue::Null()},
-      {"country", FieldValue::FromString("China")},
-      {"capital", FieldValue::FromBoolean(true)},
-      {"population", FieldValue::FromInteger(21500000)},
-      {"regions", FieldValue::FromArray({FieldValue::FromString("jingjinji"),
-                                         FieldValue::FromString("hebei")})},
+      {"country", FieldValue::String("China")},
+      {"capital", FieldValue::Boolean(true)},
+      {"population", FieldValue::Integer(21500000)},
+      {"regions", FieldValue::Array({FieldValue::String("jingjinji"),
+                                     FieldValue::String("hebei")})},
   });
   // [END example_data]
 }
@@ -493,7 +493,7 @@ void ReadDataGetDocument(firebase::firestore::Firestore* db) {
   // [START get_document]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.Get().OnCompletion([](const Future<DocumentSnapshot>& future) {
-    if (future.error() == Error::Ok) {
+    if (future.error() == Error::kErrorOk) {
       const DocumentSnapshot& document = *future.result();
       if (document.exists()) {
         std::cout << "DocumentSnapshot id: " << document.id() << '\n';
@@ -530,7 +530,7 @@ void ReadDataSourceOptions(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   Source source = Source::kCache;
   doc_ref.Get(source).OnCompletion([](const Future<DocumentSnapshot>& future) {
-    if (future.error() == Error::Ok) {
+    if (future.error() == Error::kErrorOk) {
       const DocumentSnapshot& document = *future.result();
       if (document.exists()) {
         std::cout << "Cached document id: " << document.id() << '\n';
@@ -558,10 +558,10 @@ void ReadDataGetMultipleDocumentsFromCollection(
   // retrieve the results:
   // [START get_multiple]
   db->Collection("cities")
-      .WhereEqualTo("capital", FieldValue::FromBoolean(true))
+      .WhereEqualTo("capital", FieldValue::Boolean(true))
       .Get()
       .OnCompletion([](const Future<QuerySnapshot>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
             std::cout << document << '\n';
@@ -586,7 +586,7 @@ void ReadDataGetAllDocumentsInCollection(firebase::firestore::Firestore* db) {
   // [START get_multiple_all]
   db->Collection("cities").Get().OnCompletion(
       [](const Future<QuerySnapshot>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
             std::cout << document << '\n';
@@ -613,7 +613,7 @@ void ReadDataListen(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener(
       [](const DocumentSnapshot& snapshot, Error error) {
-        if (error == Error::Ok) {
+        if (error == Error::kErrorOk) {
           if (snapshot.exists()) {
             std::cout << "Current data: " << snapshot << '\n';
           } else {
@@ -647,7 +647,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener([](const DocumentSnapshot& snapshot,
                                  Error error) {
-    if (error == Error::Ok) {
+    if (error == Error::kErrorOk) {
       const char* source =
           snapshot.metadata().has_pending_writes() ? "Local" : "Server";
       if (snapshot.exists()) {
@@ -707,9 +707,9 @@ void ReadDataListenToMultipleDocumentsInCollection(
   // example, to listen to the documents with state CA:
   // [START listen_multiple]
   db->Collection("cities")
-      .WhereEqualTo("state", FieldValue::FromString("CA"))
+      .WhereEqualTo("state", FieldValue::String("CA"))
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
-        if (error == Error::Ok) {
+        if (error == Error::kErrorOk) {
           std::vector<std::string> cities;
           std::cout << "Current cities in CA: " << error << '\n';
           for (const DocumentSnapshot& doc : snapshot.documents()) {
@@ -739,9 +739,9 @@ void ReadDataViewChangesBetweenSnapshots(firebase::firestore::Firestore* db) {
   // removed, and modified.
   // [START listen_diffs]
   db->Collection("cities")
-      .WhereEqualTo("state", FieldValue::FromString("CA"))
+      .WhereEqualTo("state", FieldValue::String("CA"))
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
-        if (error == Error::Ok) {
+        if (error == Error::kErrorOk) {
           for (const DocumentChange& dc : snapshot.DocumentChanges()) {
             switch (dc.type()) {
               case DocumentChange::Type::kAdded:
@@ -804,13 +804,13 @@ void ReadDataSimpleQueries(firebase::firestore::Firestore* db) {
   CollectionReference cities_ref = db->Collection("cities");
   // Create a query against the collection.
   Query query_ca =
-      cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"));
+      cities_ref.WhereEqualTo("state", FieldValue::String("CA"));
   // [END simple_queries]
 
   // The following query returns all the capital cities:
   // [START query_capitals]
   Query capital_cities = db->Collection("cities").WhereEqualTo(
-      "capital", FieldValue::FromBoolean(true));
+      "capital", FieldValue::Boolean(true));
   // [END query_capitals]
 }
 
@@ -826,10 +826,10 @@ void ReadDataExecuteQuery(firebase::firestore::Firestore* db) {
   // results:
   // This snippet is identical to get_multiple above.
   db->Collection("cities")
-      .WhereEqualTo("capital", FieldValue::FromBoolean(true))
+      .WhereEqualTo("capital", FieldValue::Boolean(true))
       .Get()
       .OnCompletion([](const Future<QuerySnapshot>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
             std::cout << document << '\n';
@@ -850,10 +850,10 @@ void ReadDataQueryOperators(firebase::firestore::Firestore* db) {
 
   // Some example filters:
   // [START example_filters]
-  cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"));
-  cities_ref.WhereLessThan("population", FieldValue::FromInteger(100000));
+  cities_ref.WhereEqualTo("state", FieldValue::String("CA"));
+  cities_ref.WhereLessThan("population", FieldValue::Integer(100000));
   cities_ref.WhereGreaterThanOrEqualTo("name",
-                                       FieldValue::FromString("San Francisco"));
+                                       FieldValue::String("San Francisco"));
   // [END example_filters]
 }
 
@@ -869,19 +869,19 @@ void ReadDataCompoundQueries(firebase::firestore::Firestore* db) {
   // (<, <=, >, >=) or array-contains clause, make sure to create a composite
   // index.
   // [START chain_filters]
-  cities_ref.WhereEqualTo("state", FieldValue::FromString("CO"))
-      .WhereEqualTo("name", FieldValue::FromString("Denver"));
-  cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"))
-      .WhereLessThan("population", FieldValue::FromInteger(1000000));
+  cities_ref.WhereEqualTo("state", FieldValue::String("CO"))
+      .WhereEqualTo("name", FieldValue::String("Denver"));
+  cities_ref.WhereEqualTo("state", FieldValue::String("CA"))
+      .WhereLessThan("population", FieldValue::Integer(1000000));
   // [END chain_filters]
 
   // You can only perform range comparisons (<, <=, >, >=) on a single field,
   // and you can include at most one array-contains clause in a compound query:
   // [START valid_range_filters]
-  cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::FromString("CA"))
-      .WhereLessThanOrEqualTo("state", FieldValue::FromString("IN"));
-  cities_ref.WhereEqualTo("state", FieldValue::FromString("CA"))
-      .WhereGreaterThan("population", FieldValue::FromInteger(1000000));
+  cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::String("CA"))
+      .WhereLessThanOrEqualTo("state", FieldValue::String("IN"));
+  cities_ref.WhereEqualTo("state", FieldValue::String("CA"))
+      .WhereGreaterThan("population", FieldValue::Integer(1000000));
   // [END valid_range_filters]
 }
 
@@ -895,8 +895,8 @@ void ReadDataInvalidCompoundQuery(firebase::firestore::Firestore* db) {
 
   // [START invalid_range_filters]
   // BAD EXAMPLE -- will crash the program:
-  cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::FromString("CA"))
-      .WhereGreaterThan("population", FieldValue::FromInteger(100000));
+  cities_ref.WhereGreaterThanOrEqualTo("state", FieldValue::String("CA"))
+      .WhereGreaterThan("population", FieldValue::Integer(100000));
   // [END invalid_range_filters]
 }
 
@@ -938,7 +938,7 @@ void ReadDataOrderAndLimitData(firebase::firestore::Firestore* db) {
   // population in ascending order, and return only the first few results that
   // exceed the threshold:
   // [START filter_and_order]
-  cities_ref.WhereGreaterThan("population", FieldValue::FromInteger(100000))
+  cities_ref.WhereGreaterThan("population", FieldValue::Integer(100000))
       .OrderBy("population")
       .Limit(2);
   // [END filter_and_order]
@@ -957,7 +957,7 @@ void ReadDataInvalidOrderAndLimit(firebase::firestore::Firestore* db) {
   // first ordering must be on the same field.
   // [START invalid_filter_and_order]
   // BAD EXAMPLE -- will crash the program:
-  cities_ref.WhereGreaterThan("population", FieldValue::FromInteger(100000))
+  cities_ref.WhereGreaterThan("population", FieldValue::Integer(100000))
       .OrderBy("country");
   // [END invalid_filter_and_order]
 }
@@ -970,15 +970,15 @@ void ReadDataAddSimpleCursorToQuery(firebase::firestore::Firestore* db) {
   // a query. The StartAt() method includes the start point, while the
   // StartAfter() method excludes it.
   //
-  // For example, if you use StartAt(FieldValue::FromString("A")) in a query, it
+  // For example, if you use StartAt(FieldValue::String("A")) in a query, it
   // returns the entire alphabet. If you use
-  // StartAftert(FieldValue::FromString("A")) instead, it returns B-Z.
+  // StartAftert(FieldValue::String("A")) instead, it returns B-Z.
 
   // [START cursor_greater_than]
   // Get all cities with a population >= 1,000,000, ordered by population,
   db->Collection("cities")
       .OrderBy("population")
-      .StartAt({FieldValue::FromInteger(1000000)});
+      .StartAt({FieldValue::Integer(1000000)});
   // [END cursor_greater_than]
 
   // Similarly, use the EndAt() or EndBefore() methods to define an end point
@@ -987,7 +987,7 @@ void ReadDataAddSimpleCursorToQuery(firebase::firestore::Firestore* db) {
   // Get all cities with a population <= 1,000,000, ordered by population,
   db->Collection("cities")
       .OrderBy("population")
-      .EndAt({FieldValue::FromInteger(1000000)});
+      .EndAt({FieldValue::Integer(1000000)});
   // [END cursor_less_than]
 }
 
@@ -1010,7 +1010,7 @@ void ReadDataDocumentSnapshotInCursor(firebase::firestore::Firestore* db) {
   // [START snapshot_cursor]
   db->Collection("cities").Document("SF").Get().OnCompletion(
       [db](const Future<DocumentSnapshot>& future) {
-        if (future.error() == Error::Ok) {
+        if (future.error() == Error::kErrorOk) {
           const DocumentSnapshot& document_snapshot = *future.result();
           Query bigger_than_sf = db->Collection("cities")
                                      .OrderBy("population")
@@ -1038,7 +1038,7 @@ void ReadDataPaginateQuery(firebase::firestore::Firestore* db) {
   Query first = db->Collection("cities").OrderBy("population").Limit(25);
 
   first.Get().OnCompletion([db](const Future<QuerySnapshot>& future) {
-    if (future.error() != Error::Ok) {
+    if (future.error() != Error::kErrorOk) {
       // Handle error...
       return;
     }

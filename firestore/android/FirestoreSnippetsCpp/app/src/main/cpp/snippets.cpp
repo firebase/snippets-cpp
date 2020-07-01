@@ -385,7 +385,7 @@ void AddDataDeleteDocuments(firebase::firestore::Firestore* db) {
   // [START delete_document]
   db->Collection("cities").Document("DC").Delete().OnCompletion(
       [](const Future<void>& future) {
-        if (future.error() == Error::kErrorOK) {
+        if (future.error() == Error::kErrorOk) {
           std::cout << "DocumentSnapshot successfully deleted!\n";
         } else {
           std::cout << "Error deleting document: " << future.error_message()
@@ -493,7 +493,7 @@ void ReadDataGetDocument(firebase::firestore::Firestore* db) {
   // [START get_document]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.Get().OnCompletion([](const Future<DocumentSnapshot>& future) {
-    if (future.error() == Error::kErrorOK) {
+    if (future.error() == Error::kErrorOk) {
       const DocumentSnapshot& document = *future.result();
       if (document.exists()) {
         std::cout << "DocumentSnapshot id: " << document.id() << '\n';
@@ -530,7 +530,7 @@ void ReadDataSourceOptions(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   Source source = Source::kCache;
   doc_ref.Get(source).OnCompletion([](const Future<DocumentSnapshot>& future) {
-    if (future.error() == Error::kErrorOK) {
+    if (future.error() == Error::kErrorOk) {
       const DocumentSnapshot& document = *future.result();
       if (document.exists()) {
         std::cout << "Cached document id: " << document.id() << '\n';
@@ -561,7 +561,7 @@ void ReadDataGetMultipleDocumentsFromCollection(
       .WhereEqualTo("capital", FieldValue::Boolean(true))
       .Get()
       .OnCompletion([](const Future<QuerySnapshot>& future) {
-        if (future.error() == Error::kErrorOK) {
+        if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
             std::cout << document << '\n';
@@ -586,7 +586,7 @@ void ReadDataGetAllDocumentsInCollection(firebase::firestore::Firestore* db) {
   // [START get_multiple_all]
   db->Collection("cities").Get().OnCompletion(
       [](const Future<QuerySnapshot>& future) {
-        if (future.error() == Error::kErrorOK) {
+        if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
             std::cout << document << '\n';
@@ -613,7 +613,7 @@ void ReadDataListen(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener(
       [](const DocumentSnapshot& snapshot, Error error) {
-        if (error == Error::kErrorOK) {
+        if (error == Error::kErrorOk) {
           if (snapshot.exists()) {
             std::cout << "Current data: " << snapshot << '\n';
           } else {
@@ -647,7 +647,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener([](const DocumentSnapshot& snapshot,
                                  Error error) {
-    if (error == Error::kErrorOK) {
+    if (error == Error::kErrorOk) {
       const char* source =
           snapshot.metadata().has_pending_writes() ? "Local" : "Server";
       if (snapshot.exists()) {
@@ -709,7 +709,7 @@ void ReadDataListenToMultipleDocumentsInCollection(
   db->Collection("cities")
       .WhereEqualTo("state", FieldValue::String("CA"))
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
-        if (error == Error::kErrorOK) {
+        if (error == Error::kErrorOk) {
           std::vector<std::string> cities;
           std::cout << "Current cities in CA: " << error << '\n';
           for (const DocumentSnapshot& doc : snapshot.documents()) {
@@ -741,7 +741,7 @@ void ReadDataViewChangesBetweenSnapshots(firebase::firestore::Firestore* db) {
   db->Collection("cities")
       .WhereEqualTo("state", FieldValue::String("CA"))
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
-        if (error == Error::kErrorOK) {
+        if (error == Error::kErrorOk) {
           for (const DocumentChange& dc : snapshot.DocumentChanges()) {
             switch (dc.type()) {
               case DocumentChange::Type::kAdded:
@@ -829,7 +829,7 @@ void ReadDataExecuteQuery(firebase::firestore::Firestore* db) {
       .WhereEqualTo("capital", FieldValue::Boolean(true))
       .Get()
       .OnCompletion([](const Future<QuerySnapshot>& future) {
-        if (future.error() == Error::kErrorOK) {
+        if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
             std::cout << document << '\n';
@@ -1010,7 +1010,7 @@ void ReadDataDocumentSnapshotInCursor(firebase::firestore::Firestore* db) {
   // [START snapshot_cursor]
   db->Collection("cities").Document("SF").Get().OnCompletion(
       [db](const Future<DocumentSnapshot>& future) {
-        if (future.error() == Error::kErrorOK) {
+        if (future.error() == Error::kErrorOk) {
           const DocumentSnapshot& document_snapshot = *future.result();
           Query bigger_than_sf = db->Collection("cities")
                                      .OrderBy("population")
@@ -1038,7 +1038,7 @@ void ReadDataPaginateQuery(firebase::firestore::Firestore* db) {
   Query first = db->Collection("cities").OrderBy("population").Limit(25);
 
   first.Get().OnCompletion([db](const Future<QuerySnapshot>& future) {
-    if (future.error() != Error::kErrorOK) {
+    if (future.error() != Error::kErrorOk) {
       // Handle error...
       return;
     }

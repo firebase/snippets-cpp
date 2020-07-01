@@ -196,8 +196,8 @@ void AddDataDataTypes(firebase::firestore::Firestore* db) {
       {"numberExample", FieldValue::Double(3.14159265)},
       {"dateExample", FieldValue::Timestamp(Timestamp::Now())},
       {"arrayExample", FieldValue::Array({FieldValue::Integer(1),
-                                              FieldValue::Integer(2),
-                                              FieldValue::Integer(3)})},
+                                          FieldValue::Integer(2),
+                                          FieldValue::Integer(3)})},
       {"nullExample", FieldValue::Null()},
       {"objectExample",
        FieldValue::Map(
@@ -435,7 +435,7 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
       {"capital", FieldValue::Boolean(false)},
       {"population", FieldValue::Integer(860000)},
       {"regions", FieldValue::Array({FieldValue::String("west_coast"),
-                                         FieldValue::String("norcal")})},
+                                     FieldValue::String("norcal")})},
   });
 
   cities.Document("LA").Set({
@@ -445,7 +445,7 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
       {"capital", FieldValue::Boolean(false)},
       {"population", FieldValue::Integer(3900000)},
       {"regions", FieldValue::Array({FieldValue::String("west_coast"),
-                                         FieldValue::String("socal")})},
+                                     FieldValue::String("socal")})},
   });
 
   cities.Document("DC").Set({
@@ -465,7 +465,7 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
       {"capital", FieldValue::Boolean(true)},
       {"population", FieldValue::Integer(9000000)},
       {"regions", FieldValue::Array({FieldValue::String("kanto"),
-                                         FieldValue::String("honshu")})},
+                                     FieldValue::String("honshu")})},
   });
 
   cities.Document("BJ").Set({
@@ -475,7 +475,7 @@ void ReadDataExampleData(firebase::firestore::Firestore* db) {
       {"capital", FieldValue::Boolean(true)},
       {"population", FieldValue::Integer(21500000)},
       {"regions", FieldValue::Array({FieldValue::String("jingjinji"),
-                                         FieldValue::String("hebei")})},
+                                     FieldValue::String("hebei")})},
   });
   // [END example_data]
 }

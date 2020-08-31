@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import <Firebase/Firebase.h>
 #include "firebase/app.h"
+#include "firebase/firestore.h"
 
 @interface AppDelegate ()
 
@@ -24,10 +25,15 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [FIRApp configure];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
+  // [START get_firestore_instance]
   firebase::App::Create();
+  auto db = firebase::firestore::Firestore::GetInstance();
+  // [END get_firestore_instance]
+#pragma clang diagnostic pop
   return YES;
 }
 

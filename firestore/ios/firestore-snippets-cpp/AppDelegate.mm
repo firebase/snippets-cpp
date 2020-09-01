@@ -19,6 +19,9 @@
 #include "firebase/app.h"
 #include "firebase/firestore.h"
 
+using firebase::App;
+using firebase::firestore::Firestore;
+
 @interface AppDelegate ()
 
 @end
@@ -27,13 +30,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [FIRApp configure];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-variable"
   // [START get_firestore_instance]
-  firebase::App::Create();
-  auto db = firebase::firestore::Firestore::GetInstance();
+  // Make sure the call to `Create()` happens some time before you call Firestore::GetInstance().
+  App::Create();
+  Firestore * db = Firestore::GetInstance();
   // [END get_firestore_instance]
-#pragma clang diagnostic pop
+  (void)db; // suppress unused variable warning
   return YES;
 }
 

@@ -33,7 +33,7 @@ using firebase::firestore::Firestore;
   // [START get_firestore_instance]
   // Make sure the call to `Create()` happens some time before you call Firestore::GetInstance().
   App::Create();
-  Firestore * db = Firestore::GetInstance();
+  Firestore* db = Firestore::GetInstance();
   // [END get_firestore_instance]
   (void)db; // suppress unused variable warning
   return YES;

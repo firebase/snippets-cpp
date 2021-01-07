@@ -26,8 +26,8 @@
 #include "firebase/util.h"
 
 /*
- * A collection of code snippets for the Cloud Firestore C++ SDK. These snippets
- * were modelled after the existing Cloud Firestore guide, which can be found
+ * A collection of code snippets for the Firestore C++ SDK. These snippets
+ * were modelled after the existing Firestore guide, which can be found
  * here: https://firebase.google.com/docs/firestore.
  *
  * Note that not all of the Firestore API has been implemented yet, so some
@@ -70,8 +70,8 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
   using firebase::firestore::Error;
   using firebase::firestore::FieldValue;
 
-  // Cloud Firestore stores data in Documents, which are stored in Collections.
-  // Cloud Firestore creates collections and documents implicitly the first time
+  // Firestore stores data in Documents, which are stored in Collections.
+  // Firestore creates collections and documents implicitly the first time
   // you add data to the document. You do not need to explicitly create
   // collections or documents.
 
@@ -123,7 +123,7 @@ void QuickstartReadData(firebase::firestore::Firestore* db) {
   using firebase::firestore::FieldValue;
   using firebase::firestore::QuerySnapshot;
 
-  // To quickly verify that you've added data to Cloud Firestore, use the data
+  // To quickly verify that you've added data to Firestore, use the data
   // viewer in the Firebase console.
   //
   // You can also use the "Get" method to retrieve the entire collection.
@@ -185,9 +185,9 @@ void AddDataDataTypes(firebase::firestore::Firestore* db) {
   using firebase::firestore::FieldValue;
   using firebase::firestore::MapFieldValue;
 
-  // Cloud Firestore lets you write a variety of data types inside a document,
+  // Firestore lets you write a variety of data types inside a document,
   // including strings, booleans, numbers, dates, null, and nested arrays and
-  // objects. Cloud Firestore always stores numbers as doubles, regardless of
+  // objects. Firestore always stores numbers as doubles, regardless of
   // what type of number you use in your code.
   // [START data_types]
   MapFieldValue doc_data{
@@ -229,7 +229,7 @@ void AddDataAddDocument(firebase::firestore::Firestore* db) {
   // [END set_data]
 
   // But sometimes there isn't a meaningful ID for the document, and it's more
-  // convenient to let Cloud Firestore auto-generate an ID for you. You can do
+  // convenient to let Firestore auto-generate an ID for you. You can do
   // this by calling Add():
   // [START add_document]
   db->Collection("cities").Add({/*some data*/});
@@ -411,7 +411,7 @@ void AddDataDeleteFields(firebase::firestore::Firestore* db) {
   // [END delete_field]
 
   // https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
-  // To delete an entire collection or subcollection in Cloud Firestore,
+  // To delete an entire collection or subcollection in Firestore,
   // retrieve all the documents within the collection or subcollection and
   // delete them.
   // WARNING: deleting collections from a client SDK is not recommended.
@@ -796,7 +796,7 @@ void ReadDataSimpleQueries(firebase::firestore::Firestore* db) {
   using firebase::firestore::FieldValue;
   using firebase::firestore::Query;
 
-  // Cloud Firestore provides powerful query functionality for specifying which
+  // Firestore provides powerful query functionality for specifying which
   // documents you want to retrieve from a collection.
 
   // The following query returns all cities with state CA:

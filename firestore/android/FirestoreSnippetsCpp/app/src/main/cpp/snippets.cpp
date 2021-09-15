@@ -855,6 +855,57 @@ void ReadDataQueryOperators(firebase::firestore::Firestore* db) {
   cities_ref.WhereGreaterThanOrEqualTo("name",
                                        FieldValue::String("San Francisco"));
   // [END example_filters]
+
+}
+
+// https://firebase.google.com/docs/firestore/query-data/queries#array_membership
+void ReadDataArrayMembershipOperators(firebase::firestore::Firestore* db) {
+  using firebase::firestore::CollectionReference;
+  using firebase::firestore::FieldValue;
+
+  // Some example filters:
+  // [START cpp_array_contains_filter]
+  CollectionReference cities_ref = db->Collection("cities");
+
+  cities_ref.WhereArrayContains("region", FieldValue::String("west_coast"));
+  // [END cpp_array_contains_filter]
+
+}
+
+// https://firebase.google.com/docs/firestore/query-data/queries#in_not-in_and_array-contains-any
+void ReadDataArrayInNotInOperators(firebase::firestore::Firestore* db) {
+  using firebase::firestore::CollectionReference;
+  using firebase::firestore::FieldValue;
+
+  // Some example filters:
+  // [START cpp_in_filter]
+  CollectionReference cities_ref = db->Collection("cities");
+
+  cities_ref.WhereIn("country", vector <FieldValue::String> {"USA", "Japan"});
+  // [END cpp_in_filter]
+
+  // [START cpp_not_in_filter]
+  cities_ref.WhereNotIn("country", vector <FieldValue::String> {"USA", "Japan"});
+  // [END cpp_not_in_filter]
+
+}
+
+// https://firebase.google.com/docs/firestore/query-data/queries#array-contains-any
+void ReadDataArrayContainsAnyOperators(firebase::firestore::Firestore* db) {
+  using firebase::firestore::CollectionReference;
+  using firebase::firestore::FieldValue;
+
+  // Some example filters:
+  // [START cpp_array_contains_any_filter]
+  CollectionReference cities_ref = db->Collection("cities");
+
+  cities_ref.WhereArrayContainsAny("region", vector <FieldValue::String> {"west_coast", "east_coast"});
+  // [END cpp_array_contains_any_filter]
+
+  // [START cpp_in_filter_with_array]
+  cities_ref.WhereIn("region", vector <FieldValue::String> {FieldValue::String("west_coast"), FieldValue::String("east_coast")});
+  // [END cpp_in_filter_with_array]
+
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#compound_queries

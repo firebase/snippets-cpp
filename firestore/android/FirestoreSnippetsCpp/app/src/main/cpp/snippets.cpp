@@ -881,11 +881,11 @@ void ReadDataArrayInNotInOperators(firebase::firestore::Firestore* db) {
   // [START cpp_in_filter]
   CollectionReference cities_ref = db->Collection("cities");
 
-  cities_ref.WhereIn("country", vector <FieldValue::String> {"USA", "Japan"});
+  cities_ref.WhereIn("country", std::vector<FieldValue::String> {"USA", "Japan"});
   // [END cpp_in_filter]
 
   // [START cpp_not_in_filter]
-  cities_ref.WhereNotIn("country", vector <FieldValue::String> {"USA", "Japan"});
+  cities_ref.WhereNotIn("country", std::vector<FieldValue::String> {"USA", "Japan"});
   // [END cpp_not_in_filter]
 
 }
@@ -899,11 +899,11 @@ void ReadDataArrayContainsAnyOperators(firebase::firestore::Firestore* db) {
   // [START cpp_array_contains_any_filter]
   CollectionReference cities_ref = db->Collection("cities");
 
-  cities_ref.WhereArrayContainsAny("region", vector <FieldValue::String> {"west_coast", "east_coast"});
+  cities_ref.WhereArrayContainsAny("region", std::vector<FieldValue::String> {"west_coast", "east_coast"});
   // [END cpp_array_contains_any_filter]
 
   // [START cpp_in_filter_with_array]
-  cities_ref.WhereIn("region", vector <FieldValue::String> {FieldValue::String("west_coast"), FieldValue::String("east_coast")});
+  cities_ref.WhereIn("region", std::vector<FieldValue::String> {FieldValue::String("west_coast"), FieldValue::String("east_coast")});
   // [END cpp_in_filter_with_array]
 
 }

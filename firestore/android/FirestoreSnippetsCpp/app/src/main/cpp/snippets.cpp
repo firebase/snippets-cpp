@@ -612,7 +612,7 @@ void ReadDataListen(firebase::firestore::Firestore* db) {
   // [START listen_document]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener(
-      [](const DocumentSnapshot& snapshot, Error error) {
+      [](const DocumentSnapshot& snapshot, Error error, const std::string& errorMsg) {
         if (error == Error::kErrorOk) {
           if (snapshot.exists()) {
             std::cout << "Current data: " << snapshot << '\n';

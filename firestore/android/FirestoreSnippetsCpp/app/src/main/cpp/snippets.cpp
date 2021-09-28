@@ -27,7 +27,7 @@
 
 /*
  * A collection of code snippets for the Firestore C++ SDK. These snippets
- * were modelled after the existing Firestore guide, which can be found
+ * were modeled after the existing Firestore guide, which can be found
  * here: https://firebase.google.com/docs/firestore.
  *
  * Note that not all of the Firestore API has been implemented yet, so some

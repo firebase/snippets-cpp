@@ -881,7 +881,7 @@ void ReadDataArrayInNotInOperators(firebase::firestore::Firestore* db) {
   // [START cpp_in_filter]
   CollectionReference cities_ref = db->Collection("cities");
 
-  cities_ref.WhereIn("country", std::vector<typename FieldValue::String> {FieldValue::String("USA"), FieldValue::String("Japan")});
+  cities_ref.WhereIn("country", std::vector<typename FieldValue> {FieldValue::String("USA"), FieldValue::String("Japan")});
   // [END cpp_in_filter]
 
   // [START cpp_not_in_filter]

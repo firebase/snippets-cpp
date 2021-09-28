@@ -646,7 +646,7 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
   // [START listen_document_local]
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener([](const DocumentSnapshot& snapshot,
-                                 Error error) {
+                                 Error error, const std::string& errorMsg) {
     if (error == Error::kErrorOk) {
       const char* source =
           snapshot.metadata().has_pending_writes() ? "Local" : "Server";
@@ -690,7 +690,7 @@ void ReadDataEventsForMetadataChanges(firebase::firestore::Firestore* db) {
   DocumentReference doc_ref = db->Collection("cities").Document("SF");
   doc_ref.AddSnapshotListener(
       MetadataChanges::kInclude,
-      [](const DocumentSnapshot& snapshot, Error error) { /* ... */ });
+      [](const DocumentSnapshot& snapshot, Error error, const std::string& errorMsg) { /* ... */ });
   // [END listen_with_metadata]
 }
 
@@ -708,7 +708,7 @@ void ReadDataListenToMultipleDocumentsInCollection(
   // [START listen_multiple]
   db->Collection("cities")
       .WhereEqualTo("state", FieldValue::String("CA"))
-      .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
+      .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error, const std::string& errorMsg) {
         if (error == Error::kErrorOk) {
           std::vector<std::string> cities;
           std::cout << "Current cities in CA: " << error << '\n';
@@ -740,7 +740,7 @@ void ReadDataViewChangesBetweenSnapshots(firebase::firestore::Firestore* db) {
   // [START listen_diffs]
   db->Collection("cities")
       .WhereEqualTo("state", FieldValue::String("CA"))
-      .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error) {
+      .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error, const std::string& errorMsg) {
         if (error == Error::kErrorOk) {
           for (const DocumentChange& dc : snapshot.DocumentChanges()) {
             switch (dc.type()) {
@@ -779,7 +779,7 @@ void ReadDataDetachListener(firebase::firestore::Firestore* db) {
   // Add a listener
   Query query = db->Collection("cities");
   ListenerRegistration registration = query.AddSnapshotListener(
-      [](const QuerySnapshot& snapshot, Error error) { /* ... */ });
+      [](const QuerySnapshot& snapshot, Error error, const std::string& errorMsg) { /* ... */ });
   // Stop listening to changes
   registration.Remove();
   // [END detach_listener]
@@ -881,7 +881,7 @@ void ReadDataArrayInNotInOperators(firebase::firestore::Firestore* db) {
   // [START cpp_in_filter]
   CollectionReference cities_ref = db->Collection("cities");
 
-  cities_ref.WhereIn("country", std::vector<FieldValue::String> {"USA", "Japan"});
+  cities_ref.WhereIn("country", std::vector<std::string>{FieldValue::String("USA"), FieldValue::String("Japan")});
   // [END cpp_in_filter]
 
   // [START cpp_not_in_filter]

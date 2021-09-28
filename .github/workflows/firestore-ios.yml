@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Download C++ SDK
-        run: curl -o firestore/ios/binary/firebase-cpp-sdk.zip https://dl.google.com/firebase/sdk/cpp/firebase_cpp_sdk_6.15.1.zip --create-dirs
+        run: curl -o firestore/ios/binary/firebase-cpp-sdk.zip https://dl.google.com/firebase/sdk/cpp/firebase_cpp_sdk_8.5.0.zip --create-dirs
       - name: Extract SDK
         run: unzip firestore/ios/binary/firebase-cpp-sdk.zip -d firestore/ios/binary
       - name: Build

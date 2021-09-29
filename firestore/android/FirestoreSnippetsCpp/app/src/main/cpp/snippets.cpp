@@ -1112,6 +1112,54 @@ void ReadDataPaginateQuery(firebase::firestore::Firestore* db) {
   // [END paginate]
 }
 
+// https://firebase.google.com/docs/firestore/bundles#loading_data_bundles_in_the_client
+void LoadFirestoreBundles(firebase::firestore::Firestore* db) {
+  using firebase::Future;
+  using firebase::firestore::Error;
+  using firebase::firestore::Firestore;
+  using firebase::firestore::LoadBundleTaskProgress;
+  using firebase::firestore::Query;
+  using firebase::firestore::QuerySnapshot;
+
+  // [START bundled_query]
+  db->LoadBundle("bundle_name", [](const LoadBundleTaskProgress& progress) {
+    switch(progress.state()) {
+      case LoadBundleTaskProgress::State::kError: {
+        // The bundle load has errored. Handle the error in the returned future.
+        return;
+      }
+      case LoadBundleTaskProgress::State::kInProgress: {
+        std::cout << "Bytes loaded from bundle: " << progress.bytes_loaded()
+                  << '\n';
+        break;
+      }
+      case LoadBundleTaskProgress::State::kSuccess: {
+        std::cout << "Bundle load succeeeded\n";
+        break;
+      }
+    }
+  }).OnCompletion([db](const Future<LoadBundleTaskProgress>& future) {
+    if (future.error() != Error::kErrorOk) {
+      // Handle error...
+      return;
+    }
+
+    const std::string& query_name = "latest_stories_query";
+    db->NamedQuery(query_name).OnCompletion([](const Future<Query>& query_future){
+      if (query_future.error() != Error::kErrorOk) {
+        // Handle error...
+        return;
+      }
+
+      const Query* query = query_future.result();
+      query->Get().OnCompletion([](const Future<QuerySnapshot> &){
+        // ...
+      });
+    });
+  });
+  // [END bundled_query]
+}
+
 }  // namespace snippets
 
 void RunAllSnippets(firebase::firestore::Firestore* db) {

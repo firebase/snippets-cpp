@@ -85,9 +85,9 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
   user_ref.OnCompletion([](const Future<DocumentReference>& future) {
     if (future.error() == Error::kErrorOk) {
       std::cout << "DocumentSnapshot added with ID: " << future.result()->id()
-                << '\n';
+                << std::endl;
     } else {
-      std::cout << "Error adding document: " << future.error_message() << '\n';
+      std::cout << "Error adding document: " << future.error_message() << std::endl;
     }
   });
   // [END add_ada_lovelace]
@@ -106,10 +106,10 @@ void QuickstartAddData(firebase::firestore::Firestore* db) {
       .OnCompletion([](const Future<DocumentReference>& future) {
         if (future.error() == Error::kErrorOk) {
           std::cout << "DocumentSnapshot added with ID: "
-                    << future.result()->id() << '\n';
+                    << future.result()->id() << std::endl;
         } else {
           std::cout << "Error adding document: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
   // [END add_alan_turing]
@@ -132,11 +132,11 @@ void QuickstartReadData(firebase::firestore::Firestore* db) {
   users.OnCompletion([](const Future<QuerySnapshot>& future) {
     if (future.error() == Error::kErrorOk) {
       for (const DocumentSnapshot& document : future.result()->documents()) {
-        std::cout << document << '\n';
+        std::cout << document << std::endl;
       }
     } else {
       std::cout << "Error getting documents: " << future.error_message()
-                << '\n';
+                << std::endl;
     }
   });
   // [END get_collection]
@@ -159,10 +159,10 @@ void AddDataSetDocument(firebase::firestore::Firestore* db) {
             {"country", FieldValue::String("USA")}})
       .OnCompletion([](const Future<void>& future) {
         if (future.error() == Error::kErrorOk) {
-          std::cout << "DocumentSnapshot successfully written!\n";
+          std::cout << "DocumentSnapshot successfully written!" << std::endl;
         } else {
           std::cout << "Error writing document: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
   // [END set_document]
@@ -209,10 +209,10 @@ void AddDataDataTypes(firebase::firestore::Firestore* db) {
   db->Collection("data").Document("one").Set(doc_data).OnCompletion(
       [](const Future<void>& future) {
         if (future.error() == Error::kErrorOk) {
-          std::cout << "DocumentSnapshot successfully written!\n";
+          std::cout << "DocumentSnapshot successfully written!" << std::endl;
         } else {
           std::cout << "Error writing document: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
   // [END data_types]
@@ -330,9 +330,9 @@ void AddDataBatchedWrites(firebase::firestore::Firestore* db) {
   // Commit the batch
   batch.Commit().OnCompletion([](const Future<void>& future) {
     if (future.error() == Error::kErrorOk) {
-      std::cout << "Write batch success!\n";
+      std::cout << "Write batch success!" << std::endl;
     } else {
-      std::cout << "Write batch failure: " << future.error_message() << '\n';
+      std::cout << "Write batch failure: " << future.error_message() << std::endl;
     }
   });
   // [END write_batch]
@@ -368,9 +368,9 @@ void AddDataTransactions(firebase::firestore::Firestore* db) {
       return Error::kErrorOk;
     }).OnCompletion([](const Future<void>& future) {
     if (future.error() == Error::kErrorOk) {
-      std::cout << "Transaction success!\n";
+      std::cout << "Transaction success!" << std::endl;
     } else {
-      std::cout << "Transaction failure: " << future.error_message() << '\n';
+      std::cout << "Transaction failure: " << future.error_message() << std::endl;
     }
   });
   // [END simple_transaction]
@@ -386,10 +386,10 @@ void AddDataDeleteDocuments(firebase::firestore::Firestore* db) {
   db->Collection("cities").Document("DC").Delete().OnCompletion(
       [](const Future<void>& future) {
         if (future.error() == Error::kErrorOk) {
-          std::cout << "DocumentSnapshot successfully deleted!\n";
+          std::cout << "DocumentSnapshot successfully deleted!" << std::endl;
         } else {
           std::cout << "Error deleting document: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
   // [END delete_document]
@@ -496,12 +496,12 @@ void ReadDataGetDocument(firebase::firestore::Firestore* db) {
     if (future.error() == Error::kErrorOk) {
       const DocumentSnapshot& document = *future.result();
       if (document.exists()) {
-        std::cout << "DocumentSnapshot id: " << document.id() << '\n';
+        std::cout << "DocumentSnapshot id: " << document.id() << std::endl;
       } else {
-        std::cout << "no such document\n";
+        std::cout << "no such document" << std::endl;
       }
     } else {
-      std::cout << "Get failed with: " << future.error_message() << '\n';
+      std::cout << "Get failed with: " << future.error_message() << std::endl;
     }
   });
   // [END get_document]
@@ -533,11 +533,11 @@ void ReadDataSourceOptions(firebase::firestore::Firestore* db) {
     if (future.error() == Error::kErrorOk) {
       const DocumentSnapshot& document = *future.result();
       if (document.exists()) {
-        std::cout << "Cached document id: " << document.id() << '\n';
+        std::cout << "Cached document id: " << document.id() << std::endl;
       } else {
       }
     } else {
-      std::cout << "Cached get failed: " << future.error_message() << '\n';
+      std::cout << "Cached get failed: " << future.error_message() << std::endl;
     }
   });
   // [END get_document_options]
@@ -564,11 +564,11 @@ void ReadDataGetMultipleDocumentsFromCollection(
         if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
-            std::cout << document << '\n';
+            std::cout << document << std::endl;
           }
         } else {
           std::cout << "Error getting documents: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
   // [END get_multiple]
@@ -589,11 +589,11 @@ void ReadDataGetAllDocumentsInCollection(firebase::firestore::Firestore* db) {
         if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
-            std::cout << document << '\n';
+            std::cout << document << std::endl;
           }
         } else {
           std::cout << "Error getting documents: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
   // [END get_multiple_all]
@@ -615,12 +615,12 @@ void ReadDataListen(firebase::firestore::Firestore* db) {
       [](const DocumentSnapshot& snapshot, Error error, const std::string& errorMsg) {
         if (error == Error::kErrorOk) {
           if (snapshot.exists()) {
-            std::cout << "Current data: " << snapshot << '\n';
+            std::cout << "Current data: " << snapshot << std::endl;
           } else {
-            std::cout << "Current data: null\n";
+            std::cout << "Current data: null" << std::endl;
           }
         } else {
-          std::cout << "Listen failed: " << error << '\n';
+          std::cout << "Listen failed: " << error << std::endl;
         }
       });
   // [END listen_document]
@@ -652,12 +652,12 @@ void ReadDataEventsForLocalChanges(firebase::firestore::Firestore* db) {
           snapshot.metadata().has_pending_writes() ? "Local" : "Server";
       if (snapshot.exists()) {
         std::cout << source << " data: " << snapshot.Get("name").string_value()
-                  << '\n';
+                  << std::endl;
       } else {
-        std::cout << source << " data: null\n";
+        std::cout << source << " data: null" << std::endl;
       }
     } else {
-      std::cout << "Listen failed: " << error << '\n';
+      std::cout << "Listen failed: " << error << std::endl;
     }
   });
   // [END listen_document_local]
@@ -711,13 +711,13 @@ void ReadDataListenToMultipleDocumentsInCollection(
       .AddSnapshotListener([](const QuerySnapshot& snapshot, Error error, const std::string& errorMsg) {
         if (error == Error::kErrorOk) {
           std::vector<std::string> cities;
-          std::cout << "Current cities in CA: " << error << '\n';
+          std::cout << "Current cities in CA: " << error << std::endl;
           for (const DocumentSnapshot& doc : snapshot.documents()) {
             cities.push_back(doc.Get("name").string_value());
-            std::cout << "" << cities.back() << '\n';
+            std::cout << "" << cities.back() << std::endl;
           }
         } else {
-          std::cout << "Listen failed: " << error << '\n';
+          std::cout << "Listen failed: " << error << std::endl;
         }
       });
   // [END listen_multiple]
@@ -746,20 +746,20 @@ void ReadDataViewChangesBetweenSnapshots(firebase::firestore::Firestore* db) {
             switch (dc.type()) {
               case DocumentChange::Type::kAdded:
                 std::cout << "New city: "
-                          << dc.document().Get("name").string_value() << '\n';
+                          << dc.document().Get("name").string_value() << std::endl;
                 break;
               case DocumentChange::Type::kModified:
                 std::cout << "Modified city: "
-                          << dc.document().Get("name").string_value() << '\n';
+                          << dc.document().Get("name").string_value() << std::endl;
                 break;
               case DocumentChange::Type::kRemoved:
                 std::cout << "Removed city: "
-                          << dc.document().Get("name").string_value() << '\n';
+                          << dc.document().Get("name").string_value() << std::endl;
                 break;
             }
           }
         } else {
-          std::cout << "Listen failed: " << error << '\n';
+          std::cout << "Listen failed: " << error << std::endl;
         }
       });
   // [END listen_diffs]
@@ -832,11 +832,11 @@ void ReadDataExecuteQuery(firebase::firestore::Firestore* db) {
         if (future.error() == Error::kErrorOk) {
           for (const DocumentSnapshot& document :
                future.result()->documents()) {
-            std::cout << document << '\n';
+            std::cout << document << std::endl;
           }
         } else {
           std::cout << "Error getting documents: " << future.error_message()
-                    << '\n';
+                    << std::endl;
         }
       });
 }
@@ -881,13 +881,18 @@ void ReadDataArrayInNotInOperators(firebase::firestore::Firestore* db) {
   // [START cpp_in_filter]
   CollectionReference cities_ref = db->Collection("cities");
 
-  cities_ref.WhereIn("country", std::vector<typename firebase::firestore::FieldValue> {FieldValue::String("USA"), FieldValue::String("Japan")});
+  cities_ref.WhereIn("country", std::vector<FieldValue> {
+    FieldValue::String("USA"),
+    FieldValue::String("Japan")
+  });
   // [END cpp_in_filter]
 
   // [START cpp_not_in_filter]
-  cities_ref.WhereNotIn("country", std::vector<typename firebase::firestore::FieldValue> {FieldValue::String("USA"), FieldValue::String("Japan")});
+  cities_ref.WhereNotIn("country", std::vector<FieldValue> {
+    FieldValue::String("USA"),
+    FieldValue::String("Japan")
+  });
   // [END cpp_not_in_filter]
-
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#array-contains-any
@@ -899,13 +904,18 @@ void ReadDataArrayContainsAnyOperators(firebase::firestore::Firestore* db) {
   // [START cpp_array_contains_any_filter]
   CollectionReference cities_ref = db->Collection("cities");
 
-  cities_ref.WhereArrayContainsAny("region", std::vector<typename firebase::firestore::FieldValue> {FieldValue::String("west_coast"), FieldValue::String("east_coast")});
+  cities_ref.WhereArrayContainsAny("region", std::vector<FieldValue> {
+    FieldValue::String("west_coast"),
+    FieldValue::String("east_coast")
+  });
   // [END cpp_array_contains_any_filter]
 
   // [START cpp_in_filter_with_array]
-  cities_ref.WhereIn("region", std::vector<typename firebase::firestore::FieldValue> {FieldValue::String("west_coast"), FieldValue::String("east_coast")});
+  cities_ref.WhereIn("region", std::vector<FieldValue> {
+    FieldValue::String("west_coast"),
+    FieldValue::String("east_coast")
+  });
   // [END cpp_in_filter_with_array]
-
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#compound_queries
@@ -1130,11 +1140,11 @@ void LoadFirestoreBundles(firebase::firestore::Firestore* db) {
       }
       case LoadBundleTaskProgress::State::kInProgress: {
         std::cout << "Bytes loaded from bundle: " << progress.bytes_loaded()
-                  << '\n';
+                  << std::endl;
         break;
       }
       case LoadBundleTaskProgress::State::kSuccess: {
-        std::cout << "Bundle load succeeeded\n";
+        std::cout << "Bundle load succeeeded" << std::endl;
         break;
       }
     }

@@ -856,6 +856,10 @@ void ReadDataQueryOperators(firebase::firestore::Firestore* db) {
                                        FieldValue::String("San Francisco"));
   // [END example_filters]
 
+  // [START query_filter_not_eq]
+  cities_ref.WhereNotEqualTo("capital", FieldValue::Boolean(false));
+  // [END query_filter_not_eq]
+
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries#array_membership
@@ -917,6 +921,82 @@ void ReadDataArrayContainsAnyOperators(firebase::firestore::Firestore* db) {
   });
   // [END cpp_in_filter_with_array]
 }
+
+
+
+void QueryCollectionGroupFilterEq(firebase::firestore::Firestore* db) // 2 TODO
+{
+
+  using firebase::firestore::CollectionReference;
+  using firebase::firestore::FieldValue;
+  using firebase::firestore::Error;
+  using firebase::firestore::QuerySnapshot;
+  using firebase::firestore::DocumentSnapshot;
+  using firebase::firestore::Query;
+
+  // [START query_collection_group_filter_eq]
+  db->CollectionGroup("landmarks")
+  .WhereEqualTo("type", FieldValue::String("museum")).Get()
+  .OnCompletion([](const firebase::Future<QuerySnapshot>& future) {
+    if (future.error() == Error::kErrorOk) {
+      for (const DocumentSnapshot& document : future.result()->documents()) {
+        std::cout << document << std::endl;
+      }
+    } else {
+      std::cout << "Error getting documents: " << future.error_message()
+                << std::endl;
+    }
+  });
+  // [END query_collection_group_filter_eq]
+
+}
+
+
+void QueryCollectionGroupDataset(firebase::firestore::Firestore* db)
+{
+  using firebase::Future;
+  using firebase::firestore::DocumentReference;
+  using firebase::firestore::DocumentSnapshot;
+  using firebase::firestore::Error;
+  using firebase::firestore::FieldValue;
+  using firebase::firestore::QuerySnapshot;
+  using firebase::firestore::WriteBatch;
+
+  // [START query_collection_group_dataset]
+  // Get a new write batch
+  WriteBatch batch = db->batch();
+
+  DocumentReference sf_ref = db->Collection("cities").Document("SF");
+  batch.Set(sf_ref,{{"name", FieldValue::String("Golden Gate Bridge")}, {"type", FieldValue::String("bridge")}});
+  batch.Set(sf_ref,{{"name", FieldValue::String("Legion of Honor")}, {"type", FieldValue::String("museum")}});
+
+  DocumentReference la_ref = db->Collection("cities").Document("LA");
+  batch.Set(la_ref,{{"name", FieldValue::String("Griffith Park")}, {"type", FieldValue::String("park")}});
+  batch.Set(la_ref,{{"name", FieldValue::String("The Getty")}, {"type", FieldValue::String("museum")}});
+
+  DocumentReference dc_ref = db->Collection("cities").Document("DC");
+  batch.Set(dc_ref,{{"name", FieldValue::String("Lincoln Memorial")}, {"type", FieldValue::String("memorial")}});
+  batch.Set(dc_ref,{{"name", FieldValue::String("National Air and Space Museum")}, {"type", FieldValue::String("museum")}});
+
+  DocumentReference tok_ref = db->Collection("cities").Document("TOK");
+  batch.Set(tok_ref,{{"name", FieldValue::String("Ueno Park")}, {"type", FieldValue::String("park")}});
+  batch.Set(tok_ref,{{"name", FieldValue::String("National Museum of Nature and Science")}, {"type", FieldValue::String("museum")}});
+
+  DocumentReference bj_ref = db->Collection("cities").Document("BJ");
+  batch.Set(bj_ref,{{"name", FieldValue::String("Jingshan Park")}, {"type", FieldValue::String("park")}});
+  batch.Set(bj_ref,{{"name", FieldValue::String("Beijing Ancient Observatory")}, {"type", FieldValue::String("museum")}});
+
+  // Commit the batch
+  batch.Commit().OnCompletion([](const Future<void>& future) {
+    if (future.error() == Error::kErrorOk) {
+      std::cout << "Write batch success!" << std::endl;
+    } else {
+      std::cout << "Write batch failure: " << future.error_message() << std::endl;
+    }
+  });
+  // [END query_collection_group_dataset]
+}
+
 
 // https://firebase.google.com/docs/firestore/query-data/queries#compound_queries
 void ReadDataCompoundQueries(firebase::firestore::Firestore* db) {
@@ -1205,6 +1285,8 @@ void RunAllSnippets(firebase::firestore::Firestore* db) {
   snippets::ReadDataExecuteQuery(db);
   snippets::ReadDataQueryOperators(db);
   snippets::ReadDataCompoundQueries(db);
+  snippets::QueryCollectionGroupDataset(db);
+  snippets::QueryCollectionGroupFilterEq(db);
 
   snippets::ReadDataOrderAndLimitData(db);
 

@@ -1,7 +1,7 @@
 platform :ios, '11.0'
 
 target 'firestore-snippets-cpp' do
-  use_frameworks!
+  use_frameworks! :linkage => :static
 
   pod 'Firebase/Auth', '9.0.0'
   pod 'Firebase/Firestore', '9.0.0'

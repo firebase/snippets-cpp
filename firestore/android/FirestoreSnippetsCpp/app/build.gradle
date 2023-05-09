@@ -9,7 +9,7 @@ apply plugin: 'com.google.gms.google-services'
 def firebase_cpp_sdk_dir = "${project.projectDir}/../../binary/firebase_cpp_sdk"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     buildToolsVersion "30.0.2"
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -17,8 +17,8 @@ android {
     }
     defaultConfig {
         applicationId "com.firebase.firestoresnippetscpp"
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion 20
+        targetSdkVersion 31
         multiDexEnabled true
         versionCode 1
         versionName "1.0"

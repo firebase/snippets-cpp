@@ -1,9 +1,17 @@
 platform :ios, '11.0'
 
 target 'firestore-snippets-cpp' do
-  use_frameworks!
+  use_frameworks! :linkage => :static
 
-  pod 'Firebase/Auth', '8.7.0'
-  pod 'Firebase/Firestore', '8.7.0'
+  pod 'Firebase/Auth', '10.9.0'
+  pod 'Firebase/Firestore', '10.9.0'
 
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+    end
+  end
 end

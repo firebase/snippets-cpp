@@ -3,15 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8D15A7BB23E4F6B400C8C0A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D15A7BA23E4F6B400C8C0A7 /* GoogleService-Info.plist */; };
-		8D50CC3323E8B179008CBBE2 /* firebase_auth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D15A7B623E4F61C00C8C0A7 /* firebase_auth.framework */; };
-		8D50CC3423E8B179008CBBE2 /* firebase_firestore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D15A7B823E4F62000C8C0A7 /* firebase_firestore.framework */; };
-		8D50CC3523E8B179008CBBE2 /* firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D15A7BF23E4F80900C8C0A7 /* firebase.framework */; };
 		8D50CC5D23EDEF54008CBBE2 /* snippets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8D50CC5B23EDEF54008CBBE2 /* snippets.cpp */; };
+		8D93EE8A2A0ADE8400BCB7CD /* firebase_firestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D93EE872A0ADE8400BCB7CD /* firebase_firestore.xcframework */; };
+		8D93EE8B2A0ADE8400BCB7CD /* firebase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D93EE882A0ADE8400BCB7CD /* firebase.xcframework */; };
+		8D93EE8C2A0ADE8400BCB7CD /* firebase_auth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D93EE892A0ADE8400BCB7CD /* firebase_auth.xcframework */; };
 		8DF1362423E4F50C00386093 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1362323E4F50C00386093 /* AppDelegate.mm */; };
 		8DF1362723E4F50C00386093 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1362623E4F50C00386093 /* SceneDelegate.m */; };
 		8DF1362A23E4F50C00386093 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1362923E4F50C00386093 /* ViewController.mm */; };
@@ -28,6 +28,13 @@
 		8D15A7BF23E4F80900C8C0A7 /* firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase.framework; path = binary/firebase_cpp_sdk/frameworks/ios/universal/firebase.framework; sourceTree = "<group>"; };
 		8D50CC5B23EDEF54008CBBE2 /* snippets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = snippets.cpp; path = ../../android/FirestoreSnippetsCpp/app/src/main/cpp/snippets.cpp; sourceTree = "<group>"; };
 		8D50CC5C23EDEF54008CBBE2 /* snippets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = snippets.h; path = ../../android/FirestoreSnippetsCpp/app/src/main/cpp/snippets.h; sourceTree = "<group>"; };
+		8D93EE7F2A0ACF3D00BCB7CD /* firebase_auth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_auth.framework; path = binary/firebase_cpp_sdk/frameworks/darwin/x86_64/firebase_auth.framework; sourceTree = "<group>"; };
+		8D93EE812A0ACF7300BCB7CD /* firebase_auth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_auth.framework; path = binary/firebase_cpp_sdk/frameworks/darwin/universal/firebase_auth.framework; sourceTree = "<group>"; };
+		8D93EE832A0ACF7D00BCB7CD /* firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase.framework; path = binary/firebase_cpp_sdk/frameworks/darwin/universal/firebase.framework; sourceTree = "<group>"; };
+		8D93EE842A0ACF7D00BCB7CD /* firebase_firestore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_firestore.framework; path = binary/firebase_cpp_sdk/frameworks/darwin/universal/firebase_firestore.framework; sourceTree = "<group>"; };
+		8D93EE872A0ADE8400BCB7CD /* firebase_firestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = firebase_firestore.xcframework; path = binary/firebase_cpp_sdk/xcframeworks/firebase_firestore.xcframework; sourceTree = "<group>"; };
+		8D93EE882A0ADE8400BCB7CD /* firebase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = firebase.xcframework; path = binary/firebase_cpp_sdk/xcframeworks/firebase.xcframework; sourceTree = "<group>"; };
+		8D93EE892A0ADE8400BCB7CD /* firebase_auth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = firebase_auth.xcframework; path = binary/firebase_cpp_sdk/xcframeworks/firebase_auth.xcframework; sourceTree = "<group>"; };
 		8DF1361F23E4F50C00386093 /* firestore-snippets-cpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "firestore-snippets-cpp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF1362223E4F50C00386093 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8DF1362323E4F50C00386093 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -47,9 +54,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D50CC3323E8B179008CBBE2 /* firebase_auth.framework in Frameworks */,
-				8D50CC3423E8B179008CBBE2 /* firebase_firestore.framework in Frameworks */,
-				8D50CC3523E8B179008CBBE2 /* firebase.framework in Frameworks */,
+				8D93EE8A2A0ADE8400BCB7CD /* firebase_firestore.xcframework in Frameworks */,
+				8D93EE8B2A0ADE8400BCB7CD /* firebase.xcframework in Frameworks */,
+				8D93EE8C2A0ADE8400BCB7CD /* firebase_auth.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +73,13 @@
 		5B26D009B57E7F07AFB39491 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8D93EE892A0ADE8400BCB7CD /* firebase_auth.xcframework */,
+				8D93EE872A0ADE8400BCB7CD /* firebase_firestore.xcframework */,
+				8D93EE882A0ADE8400BCB7CD /* firebase.xcframework */,
+				8D93EE842A0ACF7D00BCB7CD /* firebase_firestore.framework */,
+				8D93EE832A0ACF7D00BCB7CD /* firebase.framework */,
+				8D93EE7F2A0ACF3D00BCB7CD /* firebase_auth.framework */,
+				8D93EE812A0ACF7300BCB7CD /* firebase_auth.framework */,
 				8D15A7BF23E4F80900C8C0A7 /* firebase.framework */,
 				8D15A7B823E4F62000C8C0A7 /* firebase_firestore.framework */,
 				8D15A7B623E4F61C00C8C0A7 /* firebase_auth.framework */,
@@ -250,6 +264,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -309,6 +324,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -320,6 +336,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -335,6 +352,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/binary/firebase_cpp_sdk/frameworks/darwin/universal",
+					"$(PROJECT_DIR)/binary/firebase_cpp_sdk/frameworks/darwin/x86_64",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -373,15 +391,11 @@
 					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
 					"\"FirebaseFirestore\"",
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
 					"\"GTMSessionFetcher\"",
-					"-framework",
-					"\"GoogleDataTransport\"",
 					"-framework",
 					"\"GoogleUtilities\"",
 					"-framework",
@@ -422,6 +436,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/binary/firebase_cpp_sdk/frameworks/darwin/universal",
+					"$(PROJECT_DIR)/binary/firebase_cpp_sdk/frameworks/darwin/x86_64",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -460,15 +475,11 @@
 					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
 					"\"FirebaseFirestore\"",
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
 					"\"GTMSessionFetcher\"",
-					"-framework",
-					"\"GoogleDataTransport\"",
 					"-framework",
 					"\"GoogleUtilities\"",
 					"-framework",
